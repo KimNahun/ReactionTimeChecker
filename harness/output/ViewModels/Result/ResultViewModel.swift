@@ -45,6 +45,15 @@ final class ResultViewModel {
         }
     }
 
+    /// Explicitly cancel the reveal sequence task.
+    /// Called from `ResultView.onDisappear` because Swift 6's @MainActor
+    /// class `deinit` is nonisolated and cannot safely reference
+    /// the MainActor-isolated `revealTask` property.
+    func cancelReveal() {
+        revealTask?.cancel()
+        revealTask = nil
+    }
+
     private func runRevealSequence() async {
         let steps: [(RevealStage, UInt64)] = [
             (.averageMs,    600_000_000),
@@ -75,9 +84,5 @@ final class ResultViewModel {
         } else {
             return "총 실격 횟수: \(count)회"
         }
-    }
-
-    deinit {
-        revealTask?.cancel()
     }
 }

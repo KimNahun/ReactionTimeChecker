@@ -28,6 +28,9 @@ struct ResultView: View {
         .onAppear {
             viewModel.startReveal()
         }
+        .onDisappear {
+            viewModel.cancelReveal()
+        }
         .onChange(of: viewModel.stage) { _, newStage in
             handleStageChange(newStage)
         }

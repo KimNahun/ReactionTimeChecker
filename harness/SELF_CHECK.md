@@ -1,3 +1,48 @@
+# 자체 점검 (SELF_CHECK) — R2 (QA 피드백 반영)
+
+## R2 수정 요약 (QA_REPORT R1 반영)
+
+QA_REPORT R1에서 지적된 치명 결함(동시성 4/10) 및 컴파일 리스크를 모두 수정.
+
+### 수정 파일
+1. **`output/ViewModels/Test/TestViewModel.swift`**
+   - `deinit { currentTask?.cancel() }` **제거** (Swift 6: `@MainActor` 클래스의 nonisolated deinit은 격리 프로퍼티 `currentTask`에 접근 불가).
+   - 대체로 `func cancelCurrentTask()` 공개 메서드 추가 — MainActor 컨텍스트에서 명시적 호출.
+2. **`output/ViewModels/Result/ResultViewModel.swift`**
+   - `deinit { revealTask?.cancel() }` **제거** (동일한 사유).
+   - 대체로 `func cancelReveal()` 공개 메서드 추가.
+3. **`output/Views/Test/TestView.swift`**
+   - `.onDisappear { viewModel.cancelCurrentTask() }` 추가 — 화면 이탈 시 in-flight round task 정리.
+4. **`output/Views/Result/ResultView.swift`**
+   - `.onDisappear { viewModel.cancelReveal() }` 추가 — reveal sequence task 정리.
+5. **`output/Views/Test/TestComponents.swift`**
+   - `RoundProgressView.dotColor(for:)` 반환 타입을 `any ShapeStyle` → `AnyShapeStyle`로 변경.
+   - `.fill(dotColor(for: index))` 호출이 Swift 6 `Shape.fill<S: ShapeStyle>` 시그니처와 호환되도록 `AnyShapeStyle(palette.success/accent/surface)`로 래핑.
+
+### 변경 없는 파일 (건드리지 않음)
+- `output/App/ReactionTimeCheckerApp.swift`
+- `output/Models/AppPhase.swift`
+- `output/Models/Grade.swift`
+- `output/Models/ReactionAttempt.swift`
+- `output/Models/ReactionError.swift`
+- `output/Models/TestSession.swift`
+- `output/Services/ReactionTestService.swift`
+- `output/Services/StatisticsService.swift`
+- `output/Views/Home/HomeView.swift`
+- `output/Views/Components/RoundSelectorView.swift`
+- `output/Views/Result/GradeCardView.swift`
+
+### 검증 사항
+- `TestViewModel` / `ResultViewModel` 모두 `deinit` 완전 제거 → Swift 6 nonisolated deinit 에러 불가.
+- `cancelCurrentTask()` / `cancelReveal()`은 `@MainActor` 메서드이므로 `currentTask` / `revealTask` 접근 합법.
+- `TestView.onDisappear` / `ResultView.onDisappear`는 MainActor 컨텍스트(SwiftUI View)에서 실행되므로 호출 안전.
+- `RoundProgressView.dotColor`는 이제 concrete `AnyShapeStyle`을 반환 → `Shape.fill<S: ShapeStyle>` 제약 만족.
+- `@MainActor` 클래스 내부의 `nonisolated` 선언 없음 — 모든 프로퍼티 접근이 MainActor 격리에 맞음.
+- `Task { }` 블록은 모두 `@MainActor` 메서드 내부에서 생성되므로 MainActor 격리를 상속하며, 내부의 `self.state = ...` / `self.isCompleted` 등 격리 프로퍼티 접근 합법.
+- `ResultViewModel.revealGrade()` 류 함수 없음 — `startReveal()`이 `@MainActor` 컨텍스트에서 호출되며 내부 `Task`도 MainActor 상속.
+
+---
+
 # 자체 점검 (SELF_CHECK)
 
 ## SPEC 기능 체크
@@ -113,5 +158,6 @@
 ## 알려진 한계 / 개선 가능 사항
 
 1. `TestView.backgroundColorView`에서 `palette.*` Color를 `@ViewBuilder`로 반환하는 방식 — `.animation` 값 변경을 `backgroundKey` String으로 트리거함. 더 우아한 방법은 `animatableBackground` computed property로 단일 Color를 반환하는 것.
-2. `RoundProgressView.dotColor()` 함수가 `any ShapeStyle` existential을 반환 — `Color`로 통일하면 타입 안정성 향상 가능.
+2. ~~`RoundProgressView.dotColor()` 함수가 `any ShapeStyle` existential을 반환~~ → **R2에서 `AnyShapeStyle`로 수정 완료**.
 3. `CountdownView`의 내부 `@State private var pulseScale`이 View 재생성 시 초기화될 수 있음 — 상위로 애니메이션 상태를 올리면 더 안정적.
+4. `ResultViewModel.init`에서 `session.validAttempts.isEmpty`인 경우에도 `calculatePercentile(0)`이 호출되어 `lightningGod`로 계산됨 — UI는 `emptyResultView`가 덮어쓰므로 노출되지 않으나, 이번 R2에서는 QA가 요청한 "치명 결함" 범위(deinit, dotColor) 수정에만 집중했고 이 로직 결함은 남아있음. 필요 시 다음 라운드에서 방어 가능.

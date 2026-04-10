@@ -104,13 +104,13 @@ struct RoundProgressView: View {
         .padding(.vertical, DesignSpacing.xs)
     }
 
-    private func dotColor(for index: Int) -> any ShapeStyle {
+    private func dotColor(for index: Int) -> AnyShapeStyle {
         if index < current {
-            return palette.success
+            return AnyShapeStyle(palette.success)
         } else if index == current {
-            return palette.accent
+            return AnyShapeStyle(palette.accent)
         } else {
-            return palette.surface
+            return AnyShapeStyle(palette.surface)
         }
     }
 }

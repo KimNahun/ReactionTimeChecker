@@ -82,6 +82,15 @@ final class TestViewModel {
         TestSession(attempts: attempts, rounds: totalRounds)
     }
 
+    /// Explicitly cancel the in-flight round task.
+    /// Called from `TestView.onDisappear` (and on phase transitions) because
+    /// Swift 6's @MainActor class `deinit` is nonisolated and cannot touch
+    /// MainActor-isolated state like `currentTask` safely.
+    func cancelCurrentTask() {
+        currentTask?.cancel()
+        currentTask = nil
+    }
+
     // MARK: - Private
 
     private func applyCheat() {
@@ -142,9 +151,5 @@ final class TestViewModel {
         } catch {
             // Task was cancelled (cheat detected or retry)
         }
-    }
-
-    deinit {
-        currentTask?.cancel()
     }
 }

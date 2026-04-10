@@ -55,6 +55,9 @@ struct TestView: View {
         .onAppear {
             viewModel.startTest()
         }
+        .onDisappear {
+            viewModel.cancelCurrentTask()
+        }
     }
 
     // MARK: - Background
