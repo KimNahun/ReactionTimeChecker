@@ -50,7 +50,7 @@ struct HomeView: View {
                         .foregroundStyle(palette.textSecondary)
 
                     // Start button
-                    PillButton(title: "시작하기") {
+                    PillButton("시작하기") {
                         phase = .testing(rounds: selectedRounds)
                     }
                     .padding(.horizontal, DesignSpacing.lg)

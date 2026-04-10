@@ -30,7 +30,7 @@ struct CountdownView: View {
         ZStack {
             // Pulse ring
             Circle()
-                .stroke(palette.accent.opacity(0.3), lineWidth: 4)
+                .stroke(palette.primaryAction.opacity(0.3), lineWidth: 4)
                 .frame(width: 160, height: 160)
                 .scaleEffect(pulseScale)
                 .onAppear {
@@ -108,7 +108,7 @@ struct RoundProgressView: View {
         if index < current {
             return AnyShapeStyle(palette.success)
         } else if index == current {
-            return AnyShapeStyle(palette.accent)
+            return AnyShapeStyle(palette.primaryAction)
         } else {
             return AnyShapeStyle(palette.surface)
         }

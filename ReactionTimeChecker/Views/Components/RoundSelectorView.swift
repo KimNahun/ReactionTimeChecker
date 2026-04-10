@@ -23,7 +23,7 @@ struct RoundSelectorView: View {
                         .padding(.vertical, DesignSpacing.md)
                         .background(
                             RoundedRectangle(cornerRadius: DesignCornerRadius.lg)
-                                .fill(selected == option ? palette.accent : palette.surface)
+                                .fill(selected == option ? palette.primaryAction : palette.surface)
                         )
                 }
                 .buttonStyle(.pressScale)

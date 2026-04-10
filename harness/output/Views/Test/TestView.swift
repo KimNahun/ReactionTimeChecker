@@ -174,7 +174,7 @@ struct TestView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, DesignSpacing.lg)
 
-                RoundedActionButton(title: "다시 하기") {
+                RoundedActionButton("다시 하기") {
                     viewModel.retryCurrentRound()
                 }
                 .padding(.horizontal, DesignSpacing.lg)

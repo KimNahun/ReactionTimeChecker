@@ -49,7 +49,7 @@ struct ResultView: View {
                 .font(.ssBody)
                 .foregroundStyle(palette.textSecondary)
 
-            PillButton(title: "재도전") {
+            PillButton("재도전") {
                 withAnimation(.smooth(duration: 0.35)) {
                     phase = .home
                 }
@@ -177,7 +177,7 @@ struct ResultView: View {
 
             Text("\(viewModel.percentile)%")
                 .font(.ssTitle1)
-                .foregroundStyle(palette.accent)
+                .foregroundStyle(palette.primaryAction)
                 .contentTransition(.numericText(value: Double(viewModel.percentile)))
         }
     }
@@ -222,14 +222,14 @@ struct ResultView: View {
 
     private var actionButtons: some View {
         VStack(spacing: DesignSpacing.sm) {
-            OutlineButton(title: "결과 공유하기", action: { })
+            OutlineButton("결과 공유하기") { }
                 .padding(.horizontal, DesignSpacing.lg)
 
             Text("공유 기능은 곧 추가됩니다")
                 .font(.ssCaption)
                 .foregroundStyle(palette.textSecondary)
 
-            PillButton(title: "다시 도전하기") {
+            PillButton("다시 도전하기") {
                 withAnimation(.smooth(duration: 0.35)) {
                     phase = .home
                 }
@@ -282,7 +282,7 @@ private struct ComparisonBarRow: View {
                     .frame(height: 24)
 
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(isMe ? AnyShapeStyle(palette.accent) : AnyShapeStyle(palette.textSecondary.opacity(0.5)))
+                    .fill(isMe ? AnyShapeStyle(palette.primaryAction) : AnyShapeStyle(palette.textSecondary.opacity(0.5)))
                     .frame(
                         width: isShown ? barWidth : 0,
                         height: 24
