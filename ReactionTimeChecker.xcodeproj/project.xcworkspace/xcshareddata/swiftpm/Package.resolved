@@ -1,0 +1,15 @@
+{
+  "originHash" : "ec588eab574701326debaf43b9f722d93288e1d25f1ff34a3f951570bc539ab7",
+  "pins" : [
+    {
+      "identity" : "topdesignsystem",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KimNahun/TopDesignSystem.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d5b60c8551e9ff4f3762357c196a3866df8978c9"
+      }
+    }
+  ],
+  "version" : 3
+}
