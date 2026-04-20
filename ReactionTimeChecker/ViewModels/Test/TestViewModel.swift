@@ -92,13 +92,18 @@ final class TestViewModel {
     func cancelCurrentTask() {
         currentTask?.cancel()
         currentTask = nil
+        _dlHelper?.invalidate()
+        _dlHelper = nil
     }
 
     // MARK: - Private
 
     private func applyCheat() {
         currentTask?.cancel()
-        let message = Self.cheatedMessages.randomElement() ?? Self.cheatedMessages[0]
+        // Invalidate pending display link so it cannot overwrite .cheated state
+        _dlHelper?.invalidate()
+        _dlHelper = nil
+        let message = Self.cheatedMessages.randomElement() ?? ""
         let attempt = ReactionAttempt(
             reactionTimeMs: 0,
             isCheated: true,
@@ -155,14 +160,14 @@ final class TestViewModel {
                 let helper = _FrameTimingHelper()
                 helper.onTick = { [weak self] link in
                     MainActor.assumeIsolated {
+                        guard self?.state == .waiting else { return }
                         self?.greenFrameTime = link.targetTimestamp
                         self?.state = .green
                         self?._dlHelper = nil
                     }
                     cont.resume()
                 }
-                let dl = CADisplayLink(target: helper, selector: #selector(_FrameTimingHelper.tick))
-                dl.add(to: .main, forMode: .common)
+                helper.start()
                 _dlHelper = helper
             }
         } catch {
@@ -176,9 +181,22 @@ final class TestViewModel {
 /// 다음 프레임 타이밍을 한 번만 캡처하기 위한 one-shot CADisplayLink 래퍼.
 private final class _FrameTimingHelper: NSObject {
     var onTick: ((CADisplayLink) -> Void)?
+    private var link: CADisplayLink?
 
-    @objc func tick(_ link: CADisplayLink) {
-        onTick?(link)
-        link.invalidate()
+    func start() {
+        let dl = CADisplayLink(target: self, selector: #selector(tick))
+        dl.add(to: .main, forMode: .common)
+        link = dl
+    }
+
+    func invalidate() {
+        link?.invalidate()
+        link = nil
+        onTick = nil
+    }
+
+    @objc func tick(_ dl: CADisplayLink) {
+        onTick?(dl)
+        invalidate()
     }
 }
