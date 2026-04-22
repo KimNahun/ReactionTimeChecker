@@ -12,6 +12,7 @@ struct TestView: View {
     @State private var shakeTrigger: CGFloat = 0
     @State private var pulseOpacity: Double = 1.0
     @State private var goScale: CGFloat = 1.0
+    @State private var touchProcessed = false
 
     init(rounds: Int, phase: Binding<AppPhase>) {
         self.rounds = rounds
@@ -24,7 +25,10 @@ struct TestView: View {
             // Full-screen background color driven by state
             backgroundColorView
                 .ignoresSafeArea()
-                .animation(.easeInOut(duration: 0.12), value: backgroundKey)
+                .animation(
+                    isGreenState ? nil : .easeInOut(duration: 0.12),
+                    value: backgroundKey
+                )
 
             VStack(spacing: 0) {
                 // Progress bar — always visible during test
@@ -45,10 +49,18 @@ struct TestView: View {
             }
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            let tapTime = CACurrentMediaTime()
-            Task { await viewModel.handleTap(at: tapTime) }
-        }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    guard !touchProcessed else { return }
+                    touchProcessed = true
+                    let tapTime = CACurrentMediaTime()
+                    Task { await viewModel.handleTap(at: tapTime) }
+                }
+                .onEnded { _ in
+                    touchProcessed = false
+                }
+        )
         .onChange(of: viewModel.state) { _, newState in
             handleStateChange(newState)
         }
@@ -78,6 +90,12 @@ struct TestView: View {
         default:
             palette.background
         }
+    }
+
+    // Instant transition to green — no animation delay for accurate timing
+    private var isGreenState: Bool {
+        if case .green = viewModel.state { return true }
+        return false
     }
 
     // Used only as animation value to trigger color transitions
@@ -174,7 +192,7 @@ struct TestView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, DesignSpacing.lg)
 
-                RoundedActionButton("Try Again") {
+                RoundedActionButton(String(localized: "Try Again")) {
                     viewModel.retryCurrentRound()
                 }
                 .padding(.horizontal, DesignSpacing.lg)

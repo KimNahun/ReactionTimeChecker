@@ -53,7 +53,7 @@ struct HomeView: View {
                         .foregroundStyle(palette.textSecondary)
 
                     // Start button
-                    PillButton("Start") {
+                    PillButton(String(localized: "Start")) {
                         phase = .testing(rounds: selectedRounds)
                     }
                     .padding(.horizontal, DesignSpacing.lg)

@@ -14,3 +14,6 @@ DerivedData/
 
 # Swift Package Manager
 .swiftpm/
+
+# Secrets (API keys)
+Secrets.xcconfig

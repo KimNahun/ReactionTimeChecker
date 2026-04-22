@@ -5,7 +5,7 @@ import QuartzCore
 
 enum TestState: Sendable, Equatable {
     case idle
-    case countdown(Int)           // 3, 2, 1, 0 (GO! flash)
+    case countdown(Int)           // 3, 2, 1
     case waiting
     case green
     case recorded(ms: Int)
@@ -58,16 +58,12 @@ final class TestViewModel {
         case .waiting:
             applyCheat()
 
-        case .countdown(let n) where n == 0:
-            // GO! flash — treat as waiting (too early)
-            applyCheat()
-
         case .countdown:
             // 3 / 2 / 1 — ignore completely, no penalty
             break
 
         case .green:
-            let ms = max(1, Int((tapTime - greenFrameTime) * 1000) - 50)
+            let ms = max(1, Int(round((tapTime - greenFrameTime) * 1000)))
             applyValidRecord(ms: ms)
 
         default:
@@ -140,8 +136,8 @@ final class TestViewModel {
     }
 
     private func runRoundCycle() async {
-        // Countdown: 3 → 2 → 1 → 0 (1 second each)
-        for n in stride(from: 3, through: 0, by: -1) {
+        // Countdown: 3 → 2 → 1 then straight to waiting
+        for n in stride(from: 3, through: 1, by: -1) {
             state = .countdown(n)
             do {
                 try await Task.sleep(nanoseconds: 1_000_000_000)

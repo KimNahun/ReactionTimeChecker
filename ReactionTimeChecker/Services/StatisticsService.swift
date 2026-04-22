@@ -6,21 +6,22 @@ protocol StatisticsServiceProtocol: Sendable {
 }
 
 struct StatisticsService: StatisticsServiceProtocol, Sendable {
-    // Distribution based on humanbenchmark.com data (mean ~273ms, mode ~215ms, right-skewed)
+    // 모바일 환경 기준 분포 (터치 지연 감안, 보다 너그러운 평가)
+    // 중앙값 ~280ms 기준
     private let anchors: [(ms: Int, percentile: Double)] = [
-        (100, 0.5),   // 극소수 (세계 기록급)
-        (125, 1.0),   // 상위 1%
-        (150, 4.0),   // 상위 4%
-        (175, 13.0),  // 상위 13%
-        (200, 30.0),  // 상위 30%
-        (215, 42.0),  // 최빈값 구간 (~215ms)
-        (230, 52.0),  // 중앙값 (~230ms)
-        (250, 64.0),  // 하위 36%
-        (275, 74.0),  // 하위 26%
-        (300, 82.0),  // 하위 18%
-        (340, 90.0),  // 하위 10%
-        (390, 95.0),  // 하위 5%
-        (475, 99.0),  // 하위 1%
+        (100, 0.5),
+        (150, 2.0),
+        (175, 5.0),
+        (200, 12.0),
+        (220, 22.0),
+        (240, 33.0),
+        (260, 44.0),
+        (280, 55.0),   // 중앙값
+        (300, 65.0),
+        (330, 76.0),
+        (370, 86.0),
+        (420, 93.0),
+        (500, 99.0),
     ]
 
     func calculatePercentile(averageMs: Int) -> Int {

@@ -42,26 +42,14 @@ struct CountdownView: View {
                     }
                 }
 
-            // Countdown number or GO!
-            if seconds > 0 {
-                Text("\(seconds)")
-                    .font(.ssLargeTitle)
-                    .foregroundStyle(palette.textPrimary)
-                    .id(seconds)
-                    .transition(
-                        .scale(scale: 0.5)
-                        .combined(with: .opacity)
-                    )
-            } else {
-                Text("GO!")
-                    .font(.ssLargeTitle)
-                    .foregroundStyle(palette.success)
-                    .id("go")
-                    .transition(
-                        .scale(scale: 0.5)
-                        .combined(with: .opacity)
-                    )
-            }
+            Text("\(seconds)")
+                .font(.ssLargeTitle)
+                .foregroundStyle(palette.textPrimary)
+                .id(seconds)
+                .transition(
+                    .scale(scale: 0.5)
+                    .combined(with: .opacity)
+                )
         }
     }
 }
@@ -101,7 +89,12 @@ struct RoundProgressView: View {
             }
         }
         .padding(.horizontal, DesignSpacing.md)
-        .padding(.vertical, DesignSpacing.xs)
+        .padding(.vertical, DesignSpacing.sm)
+        .background(
+            Capsule()
+                .fill(.ultraThinMaterial)
+        )
+        .padding(.horizontal, DesignSpacing.md)
     }
 
     private func dotColor(for index: Int) -> AnyShapeStyle {

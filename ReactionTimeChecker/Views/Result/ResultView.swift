@@ -1,5 +1,6 @@
 // Views/Result/ResultView.swift
 import SwiftUI
+import UIKit
 import TopDesignSystem
 
 struct ResultView: View {
@@ -49,7 +50,7 @@ struct ResultView: View {
                 .font(.ssBody)
                 .foregroundStyle(palette.textSecondary)
 
-            PillButton("Retry") {
+            PillButton(String(localized: "Retry")) {
                 withAnimation(.smooth(duration: 0.35)) {
                     phase = .home
                 }
@@ -217,12 +218,104 @@ struct ResultView: View {
     // MARK: - Action Buttons
 
     private var actionButtons: some View {
-        PillButton("Play Again") {
-            withAnimation(.smooth(duration: 0.35)) {
-                phase = .home
+        VStack(spacing: DesignSpacing.sm) {
+            // Share section
+            VStack(spacing: DesignSpacing.sm) {
+                Text(String(localized: "Share"))
+                    .font(.ssTitle2)
+                    .foregroundStyle(palette.textPrimary)
+
+                HStack(spacing: 24) {
+                    // Kakao Share
+                    Button {
+                        KakaoShareService.share(
+                            session: session,
+                            grade: viewModel.grade,
+                            percentile: viewModel.percentile
+                        )
+                    } label: {
+                        VStack(spacing: 6) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color(red: 0.996, green: 0.898, blue: 0.0))
+                                    .frame(width: 56, height: 56)
+                                Image(systemName: "bubble.left.fill")
+                                    .font(.system(size: 24))
+                                    .foregroundStyle(.black.opacity(0.85))
+                            }
+                            Text("KakaoTalk")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(palette.textSecondary)
+                        }
+                    }
+
+                    // General share (image + text)
+                    Button {
+                        shareResultImage()
+                    } label: {
+                        VStack(spacing: 6) {
+                            ZStack {
+                                Circle()
+                                    .fill(palette.surface)
+                                    .frame(width: 56, height: 56)
+                                    .overlay(
+                                        Circle().stroke(palette.textSecondary.opacity(0.2), lineWidth: 1)
+                                    )
+                                Image(systemName: "square.and.arrow.up")
+                                    .font(.system(size: 22))
+                                    .foregroundStyle(palette.primaryAction)
+                            }
+                            Text(String(localized: "Other"))
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(palette.textSecondary)
+                        }
+                    }
+                }
             }
+            .padding(.vertical, DesignSpacing.sm)
+
+            // Play Again
+            PillButton(String(localized: "Play Again")) {
+                withAnimation(.smooth(duration: 0.35)) {
+                    phase = .home
+                }
+            }
+            .padding(.horizontal, DesignSpacing.lg)
         }
-        .padding(.horizontal, DesignSpacing.lg)
+    }
+
+    // MARK: - Share Result Image
+
+    private func shareResultImage() {
+        let cardView = ShareCardView(
+            averageMs: session.averageMs,
+            bestMs: session.bestMs,
+            worstMs: session.worstMs,
+            percentile: viewModel.percentile,
+            grade: viewModel.grade
+        )
+
+        guard let image = cardView.renderImage() else { return }
+
+        let isKorean = Locale.current.language.languageCode?.identifier == "ko"
+        let text = isKorean
+            ? "\(viewModel.grade.emoji) \(session.averageMs)ms · 상위 \(viewModel.percentile)% — QuickTap"
+            : "\(viewModel.grade.emoji) \(session.averageMs)ms · Top \(viewModel.percentile)% — QuickTap"
+
+        let activityVC = UIActivityViewController(
+            activityItems: [text, image],
+            applicationActivities: nil
+        )
+
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootVC = windowScene.windows.first?.rootViewController else { return }
+
+        // Find the topmost presented controller
+        var topVC = rootVC
+        while let presented = topVC.presentedViewController {
+            topVC = presented
+        }
+        topVC.present(activityVC, animated: true)
     }
 
     // MARK: - Stage Change Haptics
