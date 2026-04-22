@@ -1,6 +1,7 @@
 // ViewModels/Test/TestViewModel.swift
 import Foundation
 import Observation
+import QuartzCore
 
 enum TestState: Sendable, Equatable {
     case idle
@@ -23,6 +24,8 @@ final class TestViewModel {
 
     private let testService: ReactionTestServiceProtocol
     private var currentTask: Task<Void, Never>?
+    private var greenFrameTime: Double = 0   // targetTimestamp of the frame green was first displayed
+    private var _dlHelper: _FrameTimingHelper?
 
     var validAttempts: [ReactionAttempt] { attempts.filter { !$0.isCheated } }
     var cheatedCount: Int { attempts.filter { $0.isCheated }.count }
@@ -64,7 +67,7 @@ final class TestViewModel {
             break
 
         case .green:
-            let ms = await testService.calculateMs(tapTime: tapTime)
+            let ms = max(1, Int((tapTime - greenFrameTime) * 1000) - 50)
             applyValidRecord(ms: ms)
 
         default:
@@ -146,10 +149,36 @@ final class TestViewModel {
         state = .waiting
         do {
             try await testService.scheduleGreen()
-            state = .green
-            // Green state — handleTap will process the tap
+            // CADisplayLink로 다음 프레임의 정확한 표시 시각을 startTime으로 사용
+            // targetTimestamp = 해당 프레임이 실제 디스플레이에 나타나는 시각 → 이론상 오차 0
+            await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
+                let helper = _FrameTimingHelper()
+                helper.onTick = { [weak self] link in
+                    MainActor.assumeIsolated {
+                        self?.greenFrameTime = link.targetTimestamp
+                        self?.state = .green
+                        self?._dlHelper = nil
+                    }
+                    cont.resume()
+                }
+                let dl = CADisplayLink(target: helper, selector: #selector(_FrameTimingHelper.tick))
+                dl.add(to: .main, forMode: .common)
+                _dlHelper = helper
+            }
         } catch {
             // Task was cancelled (cheat detected or retry)
         }
+    }
+}
+
+// MARK: - CADisplayLink 헬퍼
+
+/// 다음 프레임 타이밍을 한 번만 캡처하기 위한 one-shot CADisplayLink 래퍼.
+private final class _FrameTimingHelper: NSObject {
+    var onTick: ((CADisplayLink) -> Void)?
+
+    @objc func tick(_ link: CADisplayLink) {
+        onTick?(link)
+        link.invalidate()
     }
 }

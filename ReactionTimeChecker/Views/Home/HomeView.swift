@@ -21,6 +21,9 @@ struct HomeView: View {
                         .font(.ssTitle1)
                         .foregroundStyle(palette.textPrimary)
                         .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.7)
+                        .lineLimit(1)
+                        .padding(.horizontal, DesignSpacing.md)
 
                     // Lightning bolt emoji decoration
                     Text("⚡️")

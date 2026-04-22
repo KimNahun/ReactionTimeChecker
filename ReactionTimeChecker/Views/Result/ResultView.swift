@@ -198,20 +198,16 @@ struct ResultView: View {
                     ("일반인", 250, false),
                 ]
 
-                GeometryReader { geo in
-                    VStack(alignment: .leading, spacing: DesignSpacing.sm) {
-                        ForEach(comparisons, id: \.0) { label, ms, isMe in
-                            ComparisonBarRow(
-                                label: label,
-                                ms: ms,
-                                isMe: isMe,
-                                maxWidth: geo.size.width,
-                                isShown: viewModel.stage >= .comparison
-                            )
-                        }
+                VStack(alignment: .leading, spacing: DesignSpacing.sm) {
+                    ForEach(comparisons, id: \.0) { label, ms, isMe in
+                        ComparisonBarRow(
+                            label: label,
+                            ms: ms,
+                            isMe: isMe,
+                            isShown: viewModel.stage >= .comparison
+                        )
                     }
                 }
-                .frame(height: 160)
             }
             .padding(DesignSpacing.lg)
         }
@@ -221,21 +217,12 @@ struct ResultView: View {
     // MARK: - Action Buttons
 
     private var actionButtons: some View {
-        VStack(spacing: DesignSpacing.sm) {
-            OutlineButton("결과 공유하기") { }
-                .padding(.horizontal, DesignSpacing.lg)
-
-            Text("공유 기능은 곧 추가됩니다")
-                .font(.ssCaption)
-                .foregroundStyle(palette.textSecondary)
-
-            PillButton("다시 도전하기") {
-                withAnimation(.smooth(duration: 0.35)) {
-                    phase = .home
-                }
+        PillButton("다시 도전하기") {
+            withAnimation(.smooth(duration: 0.35)) {
+                phase = .home
             }
-            .padding(.horizontal, DesignSpacing.lg)
         }
+        .padding(.horizontal, DesignSpacing.lg)
     }
 
     // MARK: - Stage Change Haptics
@@ -260,13 +247,11 @@ private struct ComparisonBarRow: View {
     let label: String
     let ms: Int
     let isMe: Bool
-    let maxWidth: CGFloat
     let isShown: Bool
     @Environment(\.designPalette) var palette
 
-    private var barWidth: CGFloat {
-        let ratio = min(CGFloat(ms) / 400.0, 1.0)
-        return ratio * (maxWidth - 80) // leave room for labels
+    private var ratio: CGFloat {
+        min(CGFloat(ms) / 400.0, 1.0)
     }
 
     var body: some View {
@@ -274,30 +259,32 @@ private struct ComparisonBarRow: View {
             Text(label)
                 .font(.ssFootnote)
                 .foregroundStyle(palette.textPrimary)
-                .frame(width: 50, alignment: .leading)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(minWidth: 60, alignment: .leading)
 
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(palette.surface)
-                    .frame(height: 24)
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(palette.surface)
 
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(isMe ? AnyShapeStyle(palette.primaryAction) : AnyShapeStyle(palette.textSecondary.opacity(0.5)))
-                    .frame(
-                        width: isShown ? barWidth : 0,
-                        height: 24
-                    )
-                    .animation(
-                        .spring(response: 0.6, dampingFraction: 0.7)
-                        .delay(isMe ? 0 : 0.15),
-                        value: isShown
-                    )
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(isMe ? AnyShapeStyle(palette.primaryAction) : AnyShapeStyle(palette.textSecondary.opacity(0.5)))
+                        .frame(width: isShown ? ratio * geo.size.width : 0)
+                        .animation(
+                            .spring(response: 0.6, dampingFraction: 0.7)
+                            .delay(isMe ? 0 : 0.15),
+                            value: isShown
+                        )
+                }
             }
+            .frame(height: 24)
 
             Text("\(ms)ms")
                 .font(.ssFootnote)
                 .foregroundStyle(palette.textSecondary)
-                .frame(width: 50, alignment: .trailing)
+                .lineLimit(1)
+                .frame(minWidth: 56, alignment: .trailing)
         }
     }
 }

@@ -77,7 +77,7 @@ struct RoundProgressView: View {
     var body: some View {
         HStack(spacing: DesignSpacing.xs) {
             // Dot indicators
-            HStack(spacing: 6) {
+            HStack(spacing: DesignSpacing.xs) {
                 ForEach(0..<total, id: \.self) { index in
                     Circle()
                         .fill(dotColor(for: index))
