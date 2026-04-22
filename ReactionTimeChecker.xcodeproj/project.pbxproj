@@ -12,7 +12,6 @@
 
 /* Begin PBXFileReference section */
 		41F9A82A2F88E35000783147 /* ReactionTimeChecker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactionTimeChecker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41F9A83B2F88EDB500783147 /* ReactionTimeChecker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ReactionTimeChecker.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,13 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				41F9A82A2F88E35000783147 /* ReactionTimeChecker.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		41F9A83D2F88EDB500783147 /* Products */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,12 +106,6 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 41F9A82B2F88E35000783147 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 41F9A83D2F88EDB500783147 /* Products */;
-					ProjectRef = 41F9A83B2F88EDB500783147 /* ReactionTimeChecker.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				41F9A8292F88E35000783147 /* ReactionTimeChecker */,
@@ -201,7 +187,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -259,7 +245,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
