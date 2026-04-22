@@ -40,16 +40,16 @@ struct ResultView: View {
 
     private var emptyResultView: some View {
         VStack(spacing: DesignSpacing.lg) {
-            Text("측정 결과가 없습니다 🤔")
+            Text("No results 🤔")
                 .font(.ssTitle2)
                 .foregroundStyle(palette.textPrimary)
                 .multilineTextAlignment(.center)
 
-            Text("빨간불에서는 탭하지 마세요!")
+            Text("Don't tap on the red screen!")
                 .font(.ssBody)
                 .foregroundStyle(palette.textSecondary)
 
-            PillButton("재도전") {
+            PillButton("Retry") {
                 withAnimation(.smooth(duration: 0.35)) {
                     phase = .home
                 }
@@ -65,7 +65,7 @@ struct ResultView: View {
         ScrollView {
             VStack(spacing: DesignSpacing.lg) {
                 // Title — always visible
-                Text("결과 발표")
+                Text("Results")
                     .font(.ssTitle1)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.top, DesignSpacing.xl)
@@ -130,7 +130,7 @@ struct ResultView: View {
     private var averageMsCard: some View {
         SurfaceCard(elevation: .raised) {
             VStack(spacing: DesignSpacing.sm) {
-                Text("평균 반응속도")
+                Text("Average Reaction Time")
                     .font(.ssFootnote)
                     .foregroundStyle(palette.textSecondary)
 
@@ -141,7 +141,7 @@ struct ResultView: View {
 
                 HStack(spacing: DesignSpacing.lg) {
                     VStack(spacing: 4) {
-                        Text("최고")
+                        Text("Best")
                             .font(.ssCaption)
                             .foregroundStyle(palette.textSecondary)
                         Text("\(session.bestMs) ms")
@@ -153,7 +153,7 @@ struct ResultView: View {
                         .frame(height: 32)
 
                     VStack(spacing: 4) {
-                        Text("최악")
+                        Text("Worst")
                             .font(.ssCaption)
                             .foregroundStyle(palette.textSecondary)
                         Text("\(session.worstMs) ms")
@@ -171,7 +171,7 @@ struct ResultView: View {
 
     private var percentileView: some View {
         VStack(spacing: DesignSpacing.xs) {
-            Text("상위")
+            Text("Top")
                 .font(.ssBody)
                 .foregroundStyle(palette.textSecondary)
 
@@ -187,15 +187,15 @@ struct ResultView: View {
     private var comparisonCard: some View {
         SurfaceCard(elevation: .raised) {
             VStack(alignment: .leading, spacing: DesignSpacing.md) {
-                Text("다른 사람들과 비교")
+                Text("Compare with Others")
                     .font(.ssTitle2)
                     .foregroundStyle(palette.textPrimary)
 
                 let comparisons: [(String, Int, Bool)] = [
-                    ("나", session.averageMs, true),
-                    ("운동선수", 180, false),
-                    ("게이머", 200, false),
-                    ("일반인", 250, false),
+                    (String(localized: "Me"), session.averageMs, true),
+                    (String(localized: "Athlete"), 180, false),
+                    (String(localized: "Gamer"), 200, false),
+                    (String(localized: "Average"), 250, false),
                 ]
 
                 VStack(alignment: .leading, spacing: DesignSpacing.sm) {
@@ -217,7 +217,7 @@ struct ResultView: View {
     // MARK: - Action Buttons
 
     private var actionButtons: some View {
-        PillButton("다시 도전하기") {
+        PillButton("Play Again") {
             withAnimation(.smooth(duration: 0.35)) {
                 phase = .home
             }

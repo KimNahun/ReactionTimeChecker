@@ -1,0 +1,72 @@
+/* HomeView */
+"QuickTap" = "반응속도 테스트";
+"How fast are you?" = "얼마나 빠른지 확인해볼까?";
+"Select Rounds" = "측정 횟수 선택";
+"%lld rounds, then reveal your grade!" = "%lld회 측정 후 등급 발표!";
+"Start" = "시작하기";
+"⚠️ Do NOT tap on the red screen!" = "⚠️ 빨간 화면에서 절대 탭하지 마세요!";
+
+/* RoundSelectorView */
+"%lld rounds" = "%lld회";
+
+/* TestView */
+"Don't tap!" = "탭하지 마세요!";
+"Get ready..." = "준비...";
+"Tap when it turns green!" = "초록색이 되면 바로 탭!";
+"Recorded!" = "기록됨!";
+"❌ False Start" = "❌ 실격";
+"Try Again" = "다시 하기";
+"Done!" = "완료!";
+
+/* Cheated messages */
+"Too eager! 😤 Wait for the red screen!" = "성급하시네요! 😤 빨간불에선 기다려요!";
+"Oops! Too fast. Wait for green 🚦" = "앗! 너무 빨랐어요. 초록불을 기다려주세요 🚦";
+"Foul! Did you tap with your eyes closed? 🙈" = "실격! 눈 감고 탭한 건 아니죠? 🙈";
+"False start! 🏃 Let's try again" = "부정 출발! 🏃 다시 한 번 해볼까요?";
+"Hey! Don't go on red 🚸" = "헉! 빨간불에 건너면 안 돼요 🚸";
+"Cheat detected! 🕵️ Play fair!" = "치팅 감지! 🕵️ 정정당당하게!";
+
+/* ResultView */
+"No results 🤔" = "측정 결과가 없습니다 🤔";
+"Don't tap on the red screen!" = "빨간불에서는 탭하지 마세요!";
+"Retry" = "재도전";
+"Results" = "결과 발표";
+"Average Reaction Time" = "평균 반응속도";
+"Best" = "최고";
+"Worst" = "최악";
+"Top" = "상위";
+"Compare with Others" = "다른 사람들과 비교";
+"Me" = "나";
+"Athlete" = "운동선수";
+"Gamer" = "게이머";
+"Average" = "일반인";
+"Play Again" = "다시 도전하기";
+
+/* ResultViewModel */
+"Perfect! No false starts 👏" = "완벽해요! 단 한 번도 실격 없음 👏";
+"A bit trigger-happy 😅 (%lld false starts)" = "성격 급한 편이시네요 😅 (%lld회 실격)";
+"Total false starts: %lld" = "총 실격 횟수: %lld회";
+
+/* Grade Names */
+"Speed God" = "반응속도의 신";
+"Ninja" = "닌자";
+"Cyborg" = "사이보그";
+"Cheetah" = "치타";
+"Rabbit" = "토끼";
+"Human" = "일반인";
+"Sloth Jr." = "나무늘보 주니어";
+"Turtle" = "거북이";
+"Snail" = "달팽이";
+"Fossil" = "화석";
+
+/* Grade Descriptions */
+"Faster than lightning" = "당신은 번개보다 빠릅니다";
+"Even ninjas can't keep up" = "닌자도 당신 앞엔 느림보";
+"You've exceeded human limits" = "인간의 한계를 넘었군요";
+"On par with the fastest animals on Earth" = "지구상 가장 빠른 동물급";
+"Above average reflexes" = "평균 이상의 빠른 손";
+"Decent, nothing to be ashamed of" = "평범하지만 나쁘지 않아요";
+"Try to focus a little more..." = "조금 더 집중해봐요...";
+"Slow is okay, keep it up!" = "느려도 괜찮아요, 꾸준히!";
+"Even snails are faster" = "달팽이도 당신보다 빠릅니다";
+"Were you asleep...?" = "혹시 자고 계셨나요...?";

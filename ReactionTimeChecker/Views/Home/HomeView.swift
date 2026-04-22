@@ -17,7 +17,7 @@ struct HomeView: View {
                     Spacer().frame(height: DesignSpacing.xl)
 
                     // App title
-                    Text("ReactionTimeChecker")
+                    Text("QuickTap")
                         .font(.ssTitle1)
                         .foregroundStyle(palette.textPrimary)
                         .multilineTextAlignment(.center)
@@ -30,14 +30,14 @@ struct HomeView: View {
                         .font(.system(size: 72))
 
                     // Sub copy
-                    Text("얼마나 빠른지 확인해볼까?")
+                    Text("How fast are you?")
                         .font(.ssBody)
                         .foregroundStyle(palette.textSecondary)
 
                     // Round selector card
                     SurfaceCard(elevation: .raised) {
                         VStack(spacing: DesignSpacing.sm) {
-                            Text("측정 횟수 선택")
+                            Text("Select Rounds")
                                 .font(.ssTitle2)
                                 .foregroundStyle(palette.textPrimary)
 
@@ -48,18 +48,18 @@ struct HomeView: View {
                     .padding(.horizontal, DesignSpacing.md)
 
                     // Round info text
-                    Text("\(selectedRounds)회 측정 후 등급 발표!")
+                    Text("\(selectedRounds) rounds, then reveal your grade!")
                         .font(.ssFootnote)
                         .foregroundStyle(palette.textSecondary)
 
                     // Start button
-                    PillButton("시작하기") {
+                    PillButton("Start") {
                         phase = .testing(rounds: selectedRounds)
                     }
                     .padding(.horizontal, DesignSpacing.lg)
 
                     // Warning
-                    Text("⚠️ 빨간 화면에서 절대 탭하지 마세요!")
+                    Text("⚠️ Do NOT tap on the red screen!")
                         .font(.ssCaption)
                         .foregroundStyle(palette.textSecondary)
                         .multilineTextAlignment(.center)

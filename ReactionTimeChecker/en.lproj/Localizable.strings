@@ -1,0 +1,72 @@
+/* HomeView */
+"QuickTap" = "QuickTap";
+"How fast are you?" = "How fast are you?";
+"Select Rounds" = "Select Rounds";
+"%lld rounds, then reveal your grade!" = "%lld rounds, then reveal your grade!";
+"Start" = "Start";
+"⚠️ Do NOT tap on the red screen!" = "⚠️ Do NOT tap on the red screen!";
+
+/* RoundSelectorView */
+"%lld rounds" = "%lld rounds";
+
+/* TestView */
+"Don't tap!" = "Don't tap!";
+"Get ready..." = "Get ready...";
+"Tap when it turns green!" = "Tap when it turns green!";
+"Recorded!" = "Recorded!";
+"❌ False Start" = "❌ False Start";
+"Try Again" = "Try Again";
+"Done!" = "Done!";
+
+/* Cheated messages */
+"Too eager! 😤 Wait for the red screen!" = "Too eager! 😤 Wait for the red screen!";
+"Oops! Too fast. Wait for green 🚦" = "Oops! Too fast. Wait for green 🚦";
+"Foul! Did you tap with your eyes closed? 🙈" = "Foul! Did you tap with your eyes closed? 🙈";
+"False start! 🏃 Let's try again" = "False start! 🏃 Let's try again";
+"Hey! Don't go on red 🚸" = "Hey! Don't go on red 🚸";
+"Cheat detected! 🕵️ Play fair!" = "Cheat detected! 🕵️ Play fair!";
+
+/* ResultView */
+"No results 🤔" = "No results 🤔";
+"Don't tap on the red screen!" = "Don't tap on the red screen!";
+"Retry" = "Retry";
+"Results" = "Results";
+"Average Reaction Time" = "Average Reaction Time";
+"Best" = "Best";
+"Worst" = "Worst";
+"Top" = "Top";
+"Compare with Others" = "Compare with Others";
+"Me" = "Me";
+"Athlete" = "Athlete";
+"Gamer" = "Gamer";
+"Average" = "Average";
+"Play Again" = "Play Again";
+
+/* ResultViewModel */
+"Perfect! No false starts 👏" = "Perfect! No false starts 👏";
+"A bit trigger-happy 😅 (%lld false starts)" = "A bit trigger-happy 😅 (%lld false starts)";
+"Total false starts: %lld" = "Total false starts: %lld";
+
+/* Grade Names */
+"Speed God" = "Speed God";
+"Ninja" = "Ninja";
+"Cyborg" = "Cyborg";
+"Cheetah" = "Cheetah";
+"Rabbit" = "Rabbit";
+"Human" = "Human";
+"Sloth Jr." = "Sloth Jr.";
+"Turtle" = "Turtle";
+"Snail" = "Snail";
+"Fossil" = "Fossil";
+
+/* Grade Descriptions */
+"Faster than lightning" = "Faster than lightning";
+"Even ninjas can't keep up" = "Even ninjas can't keep up";
+"You've exceeded human limits" = "You've exceeded human limits";
+"On par with the fastest animals on Earth" = "On par with the fastest animals on Earth";
+"Above average reflexes" = "Above average reflexes";
+"Decent, nothing to be ashamed of" = "Decent, nothing to be ashamed of";
+"Try to focus a little more..." = "Try to focus a little more...";
+"Slow is okay, keep it up!" = "Slow is okay, keep it up!";
+"Even snails are faster" = "Even snails are faster";
+"Were you asleep...?" = "Were you asleep...?";

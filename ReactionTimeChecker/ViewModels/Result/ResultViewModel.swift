@@ -78,11 +78,11 @@ final class ResultViewModel {
     func cheatedStatMessage() -> String {
         let count = session.cheatedCount
         if count == 0 {
-            return "완벽해요! 단 한 번도 실격 없음 👏"
+            return String(localized: "Perfect! No false starts 👏")
         } else if count >= 5 {
-            return "성격 급한 편이시네요 😅 (\(count)회 실격)"
+            return String(format: String(localized: "A bit trigger-happy 😅 (%lld false starts)"), count)
         } else {
-            return "총 실격 횟수: \(count)회"
+            return String(format: String(localized: "Total false starts: %lld"), count)
         }
     }
 }

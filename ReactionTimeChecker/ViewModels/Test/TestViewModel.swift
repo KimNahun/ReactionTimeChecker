@@ -33,12 +33,12 @@ final class TestViewModel {
     var currentDisplayRound: Int { min(validRoundCount + 1, totalRounds) }
 
     private static let cheatedMessages: [String] = [
-        "성급하시네요! 😤 빨간불에선 기다려요!",
-        "앗! 너무 빨랐어요. 초록불을 기다려주세요 🚦",
-        "실격! 눈 감고 탭한 건 아니죠? 🙈",
-        "부정 출발! 🏃‍♂️💨 다시 한 번 해볼까요?",
-        "헉! 빨간불에 건너면 안 돼요 🚸",
-        "치팅 감지! 🕵️ 정정당당하게!",
+        String(localized: "Too eager! 😤 Wait for the red screen!"),
+        String(localized: "Oops! Too fast. Wait for green 🚦"),
+        String(localized: "Foul! Did you tap with your eyes closed? 🙈"),
+        String(localized: "False start! 🏃 Let's try again"),
+        String(localized: "Hey! Don't go on red 🚸"),
+        String(localized: "Cheat detected! 🕵️ Play fair!"),
     ]
 
     init(totalRounds: Int, testService: ReactionTestServiceProtocol = ReactionTestService()) {

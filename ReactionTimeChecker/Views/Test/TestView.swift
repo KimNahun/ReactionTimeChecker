@@ -108,19 +108,19 @@ struct TestView: View {
                         value: n
                     )
 
-                Text("탭하지 마세요!")
+                Text("Don't tap!")
                     .font(.ssBody)
                     .foregroundStyle(palette.textSecondary)
             }
 
         case .waiting:
             VStack(spacing: DesignSpacing.md) {
-                Text("준비...")
+                Text("Get ready...")
                     .font(.ssTitle2)
                     .foregroundStyle(.white)
                     .opacity(pulseOpacity)
 
-                Text("초록색이 되면 바로 탭!")
+                Text("Tap when it turns green!")
                     .font(.ssBody)
                     .foregroundStyle(.white.opacity(0.85))
             }
@@ -156,7 +156,7 @@ struct TestView: View {
                         .combined(with: .opacity)
                     )
 
-                Text("기록됨!")
+                Text("Recorded!")
                     .font(.ssTitle2)
                     .foregroundStyle(.white.opacity(0.9))
                     .transition(.opacity)
@@ -164,7 +164,7 @@ struct TestView: View {
 
         case .cheated(let message):
             VStack(spacing: DesignSpacing.lg) {
-                Text("❌ 실격")
+                Text("❌ False Start")
                     .font(.ssTitle1)
                     .foregroundStyle(.white)
 
@@ -174,7 +174,7 @@ struct TestView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, DesignSpacing.lg)
 
-                RoundedActionButton("다시 하기") {
+                RoundedActionButton("Try Again") {
                     viewModel.retryCurrentRound()
                 }
                 .padding(.horizontal, DesignSpacing.lg)
@@ -186,7 +186,7 @@ struct TestView: View {
             }
 
         case .completed:
-            Text("완료!")
+            Text("Done!")
                 .font(.ssTitle1)
                 .foregroundStyle(palette.textPrimary)
                 .onAppear {

@@ -16,7 +16,7 @@ struct RoundSelectorView: View {
                         selected = option
                     }
                 } label: {
-                    Text("\(option)회")
+                    Text("\(option) rounds")
                         .font(.ssTitle2)
                         .foregroundStyle(selected == option ? .white : palette.textSecondary)
                         .frame(maxWidth: .infinity)

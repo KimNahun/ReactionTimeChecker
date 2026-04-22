@@ -1,4 +1,5 @@
 // Models/Grade.swift
+import Foundation
 
 enum Grade: String, Sendable, CaseIterable {
     case lightningGod
@@ -29,31 +30,31 @@ enum Grade: String, Sendable, CaseIterable {
 
     var name: String {
         switch self {
-        case .lightningGod: return "반응속도의 신"
-        case .ninja:        return "닌자"
-        case .cyborg:       return "사이보그"
-        case .cheetah:      return "치타"
-        case .rabbit:       return "토끼"
-        case .human:        return "일반인"
-        case .slothJr:      return "나무늘보 주니어"
-        case .turtle:       return "거북이"
-        case .snail:        return "달팽이"
-        case .fossil:       return "화석"
+        case .lightningGod: return String(localized: "Speed God")
+        case .ninja:        return String(localized: "Ninja")
+        case .cyborg:       return String(localized: "Cyborg")
+        case .cheetah:      return String(localized: "Cheetah")
+        case .rabbit:       return String(localized: "Rabbit")
+        case .human:        return String(localized: "Human")
+        case .slothJr:      return String(localized: "Sloth Jr.")
+        case .turtle:       return String(localized: "Turtle")
+        case .snail:        return String(localized: "Snail")
+        case .fossil:       return String(localized: "Fossil")
         }
     }
 
     var description: String {
         switch self {
-        case .lightningGod: return "당신은 번개보다 빠릅니다"
-        case .ninja:        return "닌자도 당신 앞엔 느림보"
-        case .cyborg:       return "인간의 한계를 넘었군요"
-        case .cheetah:      return "지구상 가장 빠른 동물급"
-        case .rabbit:       return "평균 이상의 빠른 손"
-        case .human:        return "평범하지만 나쁘지 않아요"
-        case .slothJr:      return "조금 더 집중해봐요..."
-        case .turtle:       return "느려도 괜찮아요, 꾸준히!"
-        case .snail:        return "달팽이도 당신보다 빠릅니다"
-        case .fossil:       return "혹시 자고 계셨나요...?"
+        case .lightningGod: return String(localized: "Faster than lightning")
+        case .ninja:        return String(localized: "Even ninjas can't keep up")
+        case .cyborg:       return String(localized: "You've exceeded human limits")
+        case .cheetah:      return String(localized: "On par with the fastest animals on Earth")
+        case .rabbit:       return String(localized: "Above average reflexes")
+        case .human:        return String(localized: "Decent, nothing to be ashamed of")
+        case .slothJr:      return String(localized: "Try to focus a little more...")
+        case .turtle:       return String(localized: "Slow is okay, keep it up!")
+        case .snail:        return String(localized: "Even snails are faster")
+        case .fossil:       return String(localized: "Were you asleep...?")
         }
     }
 
