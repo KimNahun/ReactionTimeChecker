@@ -75,3 +75,90 @@
 "Share" = "Share";
 "Other" = "Other";
 "Can you beat my record?" = "What's your reaction time?";
+
+/* MainTabView / MainMenu */
+"Reaction" = "Reaction";
+"Color Stroop" = "Color Stroop";
+"Choose a test" = "Choose a test";
+"Tap on green" = "Tap on green";
+"Read the color" = "Read the color";
+"Coming soon" = "Coming soon";
+"Go/No-Go" = "Go/No-Go";
+"Sequence" = "Sequence";
+"Aim" = "Aim";
+"Multi-Tap" = "Multi-Tap";
+"Sound" = "Sound";
+"Memory" = "Memory";
+"Endurance" = "Endurance";
+"Back" = "Back";
+
+/* StroopColor */
+"StroopRed" = "RED";
+"StroopBlue" = "BLUE";
+"StroopGreen" = "GREEN";
+"StroopYellow" = "YELLOW";
+"StroopPurple" = "PURPLE";
+
+/* StroopHomeView */
+"Can you ignore the word?" = "Can you ignore the word?";
+"How to Play" = "How to Play";
+"A color word appears in a DIFFERENT color" = "A color word appears in a DIFFERENT color";
+"Look at the TEXT COLOR, not the word!" = "Look at the TEXT COLOR, not the word!";
+"Tap ONLY when text color matches the target" = "Tap ONLY when text color matches the target";
+"Example:" = "Example:";
+"⚠️ Words will flash fast — stay focused!" = "⚠️ Words will flash fast — stay focused!";
+
+/* StroopTestView */
+"Target Color" = "Target Color";
+"Tap when the text color is this color!" = "Tap when the text color is this color!";
+"Wrong! Don't tap that color" = "Wrong! Don't tap that color";
+"Too slow!" = "Too slow!";
+"That was the target color" = "That was the target color";
+"Target" = "Target";
+
+/* StroopResultView */
+"No correct taps 🤔" = "No correct taps 🤔";
+"Tap only when the text color matches the target!" = "Tap only when the text color matches the target!";
+"Accuracy" = "Accuracy";
+"Breakdown" = "Breakdown";
+"Correct Taps" = "Correct Taps";
+"Missed Targets" = "Missed Targets";
+"False Taps" = "False Taps";
+"Perfect! No mistakes at all 👏" = "Perfect! No mistakes at all 👏";
+"Missed targets: %lld" = "Missed targets: %lld";
+"False taps: %lld" = "False taps: %lld";
+"Can you beat my Stroop score?" = "Can you beat my Stroop score?";
+
+/* Sequence Game */
+"Tap in order" = "Tap in order";
+"Tap numbers in order!" = "Tap numbers in order!";
+"Total Time" = "Total Time";
+"Pure Time" = "Pure Time";
+"Penalties" = "Penalties";
+"Perfect! No wrong taps 👏" = "Perfect! No wrong taps 👏";
+"Wrong taps: %lld" = "Wrong taps: %lld";
+
+/* MultiTap Game */
+"Tap circles" = "Tap circles";
+"Tap circles only!" = "Tap circles only!";
+"Circles Tapped" = "Circles Tapped";
+"out of %lld circles" = "out of %lld circles";
+"Manual taps" = "Manual taps";
+"Auto-collected" = "Auto-collected";
+"Wrong taps" = "Wrong taps";
+"Missed" = "Missed";
+
+/* TimeSense Game */
+"Time Sense" = "Time Sense";
+"Hit 10.00s" = "Hit 10.00s";
+"Tap at exactly 10.00 seconds" = "Tap at exactly 10.00 seconds";
+"5 attempts per game" = "5 attempts per game";
+"Choose Mode" = "Choose Mode";
+"Timer Visible" = "Timer Visible";
+"Timer Hidden" = "Timer Hidden";
+"Tap at exactly 10.00s!" = "Tap at exactly 10.00s!";
+"TAP at 10.00s" = "TAP at 10.00s";
+"Average Error" = "Average Error";
+"Timer visible mode" = "Timer visible mode";
+"Timer hidden mode" = "Timer hidden mode";
+"Each Attempt" = "Each Attempt";

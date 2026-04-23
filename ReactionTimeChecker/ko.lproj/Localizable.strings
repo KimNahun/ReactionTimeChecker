@@ -75,3 +75,90 @@
 "Share" = "공유하기";
 "Other" = "다른 앱";
 "Can you beat my record?" = "당신의 반응속도는?";
+
+/* MainTabView / MainMenu */
+"Reaction" = "반응속도";
+"Color Stroop" = "색상 판별";
+"Choose a test" = "테스트를 선택하세요";
+"Tap on green" = "초록색에 탭";
+"Read the color" = "색깔을 읽어라";
+"Coming soon" = "준비 중";
+"Go/No-Go" = "Go/No-Go";
+"Sequence" = "순서 탭";
+"Aim" = "조준";
+"Multi-Tap" = "멀티 탭";
+"Sound" = "소리";
+"Memory" = "기억력";
+"Endurance" = "지구력";
+"Back" = "뒤로";
+
+/* StroopColor */
+"StroopRed" = "빨강";
+"StroopBlue" = "파랑";
+"StroopGreen" = "초록";
+"StroopYellow" = "노랑";
+"StroopPurple" = "보라";
+
+/* StroopHomeView */
+"Can you ignore the word?" = "글자에 속지 마세요!";
+"How to Play" = "게임 방법";
+"A color word appears in a DIFFERENT color" = "색상 이름이 다른 색깔로 표시됩니다";
+"Look at the TEXT COLOR, not the word!" = "글자 내용이 아닌 글자의 색깔을 보세요!";
+"Tap ONLY when text color matches the target" = "글자 색깔이 목표 색일 때만 탭하세요";
+"Example:" = "예시:";
+"⚠️ Words will flash fast — stay focused!" = "⚠️ 글자가 빠르게 바뀝니다 — 집중하세요!";
+
+/* StroopTestView */
+"Target Color" = "목표 색상";
+"Tap when the text color is this color!" = "글자가 이 색깔일 때만 탭하세요!";
+"Wrong! Don't tap that color" = "틀렸어요! 그 색은 목표가 아닙니다";
+"Too slow!" = "너무 느렸어요!";
+"That was the target color" = "그건 목표 색이었어요";
+"Target" = "목표";
+
+/* StroopResultView */
+"No correct taps 🤔" = "정답 탭이 없습니다 🤔";
+"Tap only when the text color matches the target!" = "글자 색이 목표 색일 때만 탭하세요!";
+"Accuracy" = "정확도";
+"Breakdown" = "상세 결과";
+"Correct Taps" = "정답 탭";
+"Missed Targets" = "놓친 목표";
+"False Taps" = "오답 탭";
+"Perfect! No mistakes at all 👏" = "완벽해요! 실수 하나 없음 👏";
+"Missed targets: %lld" = "놓친 목표: %lld개";
+"False taps: %lld" = "오답 탭: %lld개";
+"Can you beat my Stroop score?" = "스트룹 테스트, 당신도 도전?";
+
+/* Sequence Game */
+"Tap in order" = "순서대로 탭";
+"Tap numbers in order!" = "숫자를 순서대로 탭하세요!";
+"Total Time" = "총 소요시간";
+"Pure Time" = "순수 시간";
+"Penalties" = "패널티";
+"Perfect! No wrong taps 👏" = "완벽해요! 오탭 없음 👏";
+"Wrong taps: %lld" = "오탭: %lld회";
+
+/* MultiTap Game */
+"Tap circles" = "원을 탭";
+"Tap circles only!" = "원만 탭하세요!";
+"Circles Tapped" = "탭한 원";
+"out of %lld circles" = "전체 %lld개 중";
+"Manual taps" = "직접 탭";
+"Auto-collected" = "자동 수집";
+"Wrong taps" = "오탭";
+"Missed" = "놓침";
+
+/* TimeSense Game */
+"Time Sense" = "시간 감각";
+"Hit 10.00s" = "10.00초 맞추기";
+"Tap at exactly 10.00 seconds" = "정확히 10.00초에 탭하세요";
+"5 attempts per game" = "게임당 5회 시도";
+"Choose Mode" = "모드 선택";
+"Timer Visible" = "타이머 보이기";
+"Timer Hidden" = "타이머 숨기기";
+"Tap at exactly 10.00s!" = "정확히 10.00초에 탭!";
+"TAP at 10.00s" = "10.00초에 탭";
+"Average Error" = "평균 오차";
+"Timer visible mode" = "타이머 보이기 모드";
+"Timer hidden mode" = "타이머 숨기기 모드";
+"Each Attempt" = "시도별 결과";
