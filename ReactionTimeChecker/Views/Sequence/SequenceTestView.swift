@@ -9,6 +9,9 @@ struct SequenceTestView: View {
     @State private var viewModel = SequenceViewModel()
     @Environment(\.designPalette) var palette
 
+    @State private var shakeTrigger: CGFloat = 0
+    @State private var showRedFlash: Bool = false
+
     private let columns = 5
     private let rows = 4
 
@@ -17,8 +20,14 @@ struct SequenceTestView: View {
             palette.background
                 .ignoresSafeArea()
 
+            // Red flash on wrong tap
+            if showRedFlash {
+                Color.red.opacity(0.3)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+            }
+
             VStack(spacing: 0) {
-                // Timer display
                 timerBar
                     .padding(.top, DesignSpacing.sm)
 
@@ -29,15 +38,18 @@ struct SequenceTestView: View {
                 Spacer()
             }
 
-            // Floating penalty
+            // "+3s" penalty overlay — dead center
             if viewModel.showPenalty {
                 Text(viewModel.penaltyLabel)
-                    .font(.system(size: 48, weight: .black, design: .rounded))
+                    .font(.system(size: 72, weight: .black, design: .rounded))
                     .foregroundStyle(.red)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .animation(.easeOut(duration: 0.4), value: viewModel.showPenalty)
+                    .shadow(color: .red.opacity(0.5), radius: 10)
+                    .transition(.scale(scale: 0.5).combined(with: .opacity))
             }
         }
+        .modifier(ShakeEffect(animatableData: shakeTrigger))
+        .animation(.easeInOut(duration: 0.1), value: showRedFlash)
+        .animation(.spring(response: 0.3, dampingFraction: 0.5), value: viewModel.showPenalty)
         .onChange(of: viewModel.state) { _, newState in
             handleStateChange(newState)
         }
@@ -49,7 +61,6 @@ struct SequenceTestView: View {
 
     private var timerBar: some View {
         HStack {
-            // Back button
             Button {
                 viewModel.cancelAll()
                 onCancel()
@@ -59,7 +70,6 @@ struct SequenceTestView: View {
                     .foregroundStyle(palette.primaryAction)
             }
 
-            // Timer
             HStack(spacing: 4) {
                 Image(systemName: "timer")
                     .font(.ssCaption)
@@ -72,7 +82,6 @@ struct SequenceTestView: View {
 
             Spacer()
 
-            // Progress
             Text("\(viewModel.tappedCount) / \(viewModel.numberCount)")
                 .font(.ssFootnote)
                 .foregroundStyle(palette.textSecondary)
@@ -109,12 +118,11 @@ struct SequenceTestView: View {
         case .playing, .wrongTap:
             numberGrid
 
-        case .completed(let totalMs):
+        case .completed:
             Text(String(localized: "Done!"))
                 .font(.ssTitle1)
                 .foregroundStyle(palette.textPrimary)
                 .onAppear {
-                    let _ = totalMs
                     let session = viewModel.buildSession()
                     Task {
                         try? await Task.sleep(nanoseconds: 300_000_000)
@@ -140,13 +148,7 @@ struct SequenceTestView: View {
     }
 
     private func numberCell(_ num: SequenceNumber) -> some View {
-        let isNext = num.value == viewModel.nextTarget
-        let isWrong: Bool = {
-            if case .wrongTap = viewModel.state { return false }
-            return false
-        }()
-
-        return Button {
+        Button {
             viewModel.handleTap(value: num.value)
         } label: {
             Text("\(num.value)")
@@ -156,20 +158,16 @@ struct SequenceTestView: View {
                 .frame(height: 52)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(cellColor(num: num, isNext: isNext))
+                        .fill(cellColor(num: num))
                 )
         }
         .disabled(num.isTapped)
         .animation(.easeInOut(duration: 0.15), value: num.isTapped)
-        .modifier(ShakeEffect(animatableData: isWrong ? 1 : 0))
     }
 
-    private func cellColor(num: SequenceNumber, isNext: Bool) -> some ShapeStyle {
+    private func cellColor(num: SequenceNumber) -> some ShapeStyle {
         if num.isTapped {
             return AnyShapeStyle(palette.surface.opacity(0.4))
-        }
-        if isNext {
-            return AnyShapeStyle(palette.primaryAction)
         }
         return AnyShapeStyle(palette.surface)
     }
@@ -188,6 +186,15 @@ struct SequenceTestView: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         case .wrongTap:
             UINotificationFeedbackGenerator().notificationOccurred(.error)
+            // Red flash + shake
+            showRedFlash = true
+            withAnimation(.linear(duration: 0.3)) {
+                shakeTrigger += 1
+            }
+            Task {
+                try? await Task.sleep(nanoseconds: 200_000_000)
+                showRedFlash = false
+            }
         case .completed:
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         default:

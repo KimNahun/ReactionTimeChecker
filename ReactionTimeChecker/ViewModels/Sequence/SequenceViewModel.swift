@@ -48,7 +48,10 @@ final class SequenceViewModel {
     }
 
     func handleTap(value: Int) {
-        guard case .playing = state else { return }
+        switch state {
+        case .playing, .wrongTap: break
+        default: return
+        }
         guard let target = nextTarget else { return }
 
         if value == target {
