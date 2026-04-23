@@ -173,3 +173,15 @@
 "Enter your name" = "이름을 입력해주세요";
 "Name" = "이름";
 "Confirm" = "확인";
+
+/* Sequence Home */
+"Tap numbers in ascending order!" = "숫자를 오름차순으로 탭하세요!";
+"20 random numbers appear on screen" = "화면에 20개의 랜덤 숫자가 표시됩니다";
+"Tap from smallest to largest" = "가장 작은 숫자부터 순서대로 탭하세요";
+"Wrong tap = +3 second penalty!" = "틀리면 +3초 패널티!";
+
+/* MultiTap Home */
+"Tap as many circles as you can!" = "원을 최대한 많이 탭하세요!";
+"Circles, triangles, and squares appear rapidly" = "원, 세모, 네모가 빠르게 나타납니다";
+"Tap ONLY circles — ignore other shapes!" = "원만 탭하세요 — 다른 도형은 무시!";
+"Wrong tap = -2 seconds! You have 20 seconds" = "틀리면 -2초 감점! 제한시간 20초";

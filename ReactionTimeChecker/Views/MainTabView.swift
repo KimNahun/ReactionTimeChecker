@@ -13,9 +13,9 @@ struct MainTabView: View {
         // Stroop
         case stroopHome, stroopTest(stimuli: Int), stroopResult(session: StroopSession)
         // Sequence
-        case sequenceTest, sequenceResult(session: SequenceSession)
+        case sequenceHome, sequenceTest, sequenceResult(session: SequenceSession)
         // MultiTap
-        case multiTapTest, multiTapResult(session: MultiTapSession)
+        case multiTapHome, multiTapTest, multiTapResult(session: MultiTapSession)
         // TimeSense
         case timeSenseHome, timeSenseTest(timerVisible: Bool), timeSenseResult(session: TimeSenseSession)
 
@@ -24,7 +24,9 @@ struct MainTabView: View {
             case (.none, .none),
                  (.reactionHome, .reactionHome),
                  (.stroopHome, .stroopHome),
+                 (.sequenceHome, .sequenceHome),
                  (.sequenceTest, .sequenceTest),
+                 (.multiTapHome, .multiTapHome),
                  (.multiTapTest, .multiTapTest),
                  (.timeSenseHome, .timeSenseHome),
                  (.reactionResult, .reactionResult),
@@ -86,6 +88,12 @@ struct MainTabView: View {
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
             // MARK: Sequence
+            case .sequenceHome:
+                SequenceHomeView(
+                    onStart: { go(.sequenceTest) },
+                    onBack: { goHome() }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .sequenceTest:
                 SequenceTestView(
                     onComplete: { s in go(.sequenceResult(session: s)) },
@@ -101,6 +109,12 @@ struct MainTabView: View {
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
             // MARK: MultiTap
+            case .multiTapHome:
+                MultiTapHomeView(
+                    onStart: { go(.multiTapTest) },
+                    onBack: { goHome() }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .multiTapTest:
                 MultiTapTestView(
                     onComplete: { s in go(.multiTapResult(session: s)) },
@@ -216,10 +230,10 @@ struct MainTabView: View {
                             go(.stroopHome)
                         }
                         testCard(emoji: "🔢", title: String(localized: "Sequence"), subtitle: String(localized: "Tap in order"), isEnabled: true) {
-                            go(.sequenceTest)
+                            go(.sequenceHome)
                         }
                         testCard(emoji: "👆", title: String(localized: "Multi-Tap"), subtitle: String(localized: "Tap circles"), isEnabled: true) {
-                            go(.multiTapTest)
+                            go(.multiTapHome)
                         }
                         testCard(emoji: "⏱️", title: String(localized: "Time Sense"), subtitle: String(localized: "Hit 10.00s"), isEnabled: true) {
                             go(.timeSenseHome)
@@ -271,8 +285,10 @@ struct MainTabView: View {
         case .stroopHome: "sHome"
         case .stroopTest: "sTest"
         case .stroopResult: "sResult"
+        case .sequenceHome: "seqHome"
         case .sequenceTest: "seqTest"
         case .sequenceResult: "seqResult"
+        case .multiTapHome: "mtHome"
         case .multiTapTest: "mtTest"
         case .multiTapResult: "mtResult"
         case .timeSenseHome: "tsHome"

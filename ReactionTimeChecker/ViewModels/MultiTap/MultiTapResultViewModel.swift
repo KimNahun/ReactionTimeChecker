@@ -48,22 +48,21 @@ final class MultiTapResultViewModel {
         revealTask = nil
     }
 
-    // 30 seconds, ~90+ circles spawned with fast spawn rate
+    // 20 seconds, fast spawn, very strict
     private static func calculatePercentile(circlesTapped: Int) -> Int {
-        // Invert: more tapped = lower percentile (better)
         let anchors: [(count: Int, percentile: Double)] = [
-            (85, 0.5),
-            (75, 5.0),
-            (65, 10.0),
-            (58, 20.0),
-            (50, 30.0),
-            (44, 40.0),
-            (38, 50.0),
-            (32, 60.0),
-            (26, 70.0),
-            (20, 80.0),
-            (14, 90.0),
-            (8,  95.0),
+            (60, 0.5),
+            (52, 5.0),
+            (45, 10.0),
+            (40, 20.0),
+            (35, 30.0),
+            (30, 40.0),
+            (26, 50.0),
+            (22, 60.0),
+            (18, 70.0),
+            (14, 80.0),
+            (10, 90.0),
+            (5,  95.0),
             (0,  99.0),
         ]
 

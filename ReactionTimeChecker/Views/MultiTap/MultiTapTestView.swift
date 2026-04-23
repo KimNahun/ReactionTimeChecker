@@ -22,6 +22,16 @@ struct MultiTapTestView: View {
                     .transition(.opacity)
             }
 
+            // Penalty overlay — dead center
+            if viewModel.showPenalty {
+                Text(viewModel.penaltyLabel)
+                    .font(.system(size: 72, weight: .black, design: .rounded))
+                    .foregroundStyle(.red)
+                    .shadow(color: .red.opacity(0.5), radius: 10)
+                    .transition(.scale(scale: 0.5).combined(with: .opacity))
+                    .zIndex(200)
+            }
+
             switch viewModel.state {
             case .idle:
                 EmptyView()
@@ -53,6 +63,7 @@ struct MultiTapTestView: View {
         }
         .modifier(ShakeEffect(animatableData: shakeTrigger))
         .animation(.easeInOut(duration: 0.1), value: viewModel.showWrongFlash)
+        .animation(.spring(response: 0.3, dampingFraction: 0.5), value: viewModel.showPenalty)
         .onChange(of: viewModel.state) { _, newState in
             if case .countdown = newState {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()

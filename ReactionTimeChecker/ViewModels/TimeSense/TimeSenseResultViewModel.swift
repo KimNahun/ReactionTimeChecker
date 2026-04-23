@@ -43,12 +43,11 @@ final class TimeSenseResultViewModel {
         revealTask = nil
     }
 
-    // 0.02s (20ms) intervals, 10% tiers
-    // 0ms = top 1%, 20ms = top 10%, 40ms = top 20%, ...
+    // 0.06s (60ms) intervals, 10% tiers
+    // 0ms = top 1%, ~60ms = top 10%, ~120ms = top 20%, ...
     private static func calculatePercentile(avgErrorMs: Int) -> Int {
         if avgErrorMs == 0 { return 1 }
-        // Each 20ms = one tier (10%)
-        let tier = (avgErrorMs - 1) / 20 + 1  // 1-20ms → tier 1, 21-40ms → tier 2, ...
+        let tier = (avgErrorMs - 1) / 60 + 1
         let percentile = tier * 10
         return min(99, max(1, percentile))
     }

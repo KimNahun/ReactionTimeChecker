@@ -18,11 +18,15 @@ final class MultiTapViewModel {
     private(set) var circlesTapped: Int = 0
     private(set) var circlesAutoCollected: Int = 0
     private(set) var wrongTaps: Int = 0
-    private(set) var remainingTime: Double = 30.0
+    private(set) var remainingTime: Double = 20.0
     private(set) var totalCirclesSpawned: Int = 0
     private(set) var showWrongFlash: Bool = false
+    private(set) var showPenalty: Bool = false
+    private(set) var penaltyLabel: String = ""
+    private(set) var penaltyTime: Double = 0
 
-    let gameDuration: Double = 30.0
+    let gameDuration: Double = 20.0
+    private let penaltySeconds: Double = 2.0
     private let shapeLifetime: Double = 1.2
     private let autoCollectRadius: CGFloat = 0.08
 
@@ -65,11 +69,14 @@ final class MultiTapViewModel {
         } else {
             shapes[idx].isCollected = true
             wrongTaps += 1
-            // Flash red
+            penaltyTime += penaltySeconds
+            penaltyLabel = "-\(Int(penaltySeconds))s"
+            showPenalty = true
             showWrongFlash = true
             Task {
-                try? await Task.sleep(nanoseconds: 200_000_000)
+                try? await Task.sleep(nanoseconds: 400_000_000)
                 showWrongFlash = false
+                showPenalty = false
             }
         }
     }
@@ -112,7 +119,7 @@ final class MultiTapViewModel {
         timerTask = Task {
             while !Task.isCancelled {
                 let elapsed = CACurrentMediaTime() - startTime
-                remainingTime = max(0, gameDuration - elapsed)
+                remainingTime = max(0, gameDuration - elapsed - penaltyTime)
 
                 // Remove expired shapes
                 let now = CACurrentMediaTime()

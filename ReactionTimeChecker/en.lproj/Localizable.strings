@@ -173,3 +173,15 @@
 "Enter your name" = "Enter your name";
 "Name" = "Name";
 "Confirm" = "Confirm";
+
+/* Sequence Home */
+"Tap numbers in ascending order!" = "Tap numbers in ascending order!";
+"20 random numbers appear on screen" = "20 random numbers appear on screen";
+"Tap from smallest to largest" = "Tap from smallest to largest";
+"Wrong tap = +3 second penalty!" = "Wrong tap = +3 second penalty!";
+
+/* MultiTap Home */
+"Tap as many circles as you can!" = "Tap as many circles as you can!";
+"Circles, triangles, and squares appear rapidly" = "Circles, triangles, and squares appear rapidly";
+"Tap ONLY circles — ignore other shapes!" = "Tap ONLY circles — ignore other shapes!";
+"Wrong tap = -2 seconds! You have 20 seconds" = "Wrong tap = -2 seconds! You have 20 seconds";
