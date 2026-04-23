@@ -149,27 +149,6 @@ struct StroopTestView: View {
                         .id("stimulus_\(index)")
                         .transition(.scale(scale: 0.5).combined(with: .opacity))
 
-                    // Target reminder — show previous stimulus combo
-                    if let prev = viewModel.previousStimulus {
-                        VStack(spacing: 2) {
-                            Text(prev.textLabel)
-                                .font(.system(size: 16, weight: .bold, design: .rounded))
-                                .foregroundStyle(prev.displayColor.swiftUIColor)
-                            Text("↑ \(prev.isTarget ? "O" : "X")")
-                                .font(.ssCaption)
-                                .foregroundStyle(palette.textSecondary.opacity(0.5))
-                        }
-                        .padding(.top, DesignSpacing.sm)
-                    } else {
-                        HStack(spacing: 4) {
-                            Circle()
-                                .fill(viewModel.targetColor.swiftUIColor)
-                                .frame(width: 12, height: 12)
-                            Text(viewModel.targetColor.displayName)
-                                .font(.ssCaption)
-                                .foregroundStyle(palette.textSecondary.opacity(0.6))
-                        }
-                    }
                 }
                 .onAppear {
                     wordScale = 0.7

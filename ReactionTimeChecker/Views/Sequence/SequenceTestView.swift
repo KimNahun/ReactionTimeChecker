@@ -140,6 +140,9 @@ struct SequenceTestView: View {
             let spacing: CGFloat = 10
             let totalSpacing = spacing * CGFloat(columns - 1) + DesignSpacing.md * 2
             let cellSize = (geo.size.width - totalSpacing) / CGFloat(columns)
+            let gridHeight = cellSize * CGFloat(rows) + spacing * CGFloat(rows - 1)
+            let topOffset = max(0, (geo.size.height - gridHeight) / 2)
+
             LazyVGrid(
                 columns: Array(repeating: GridItem(.flexible(), spacing: spacing), count: columns),
                 spacing: spacing
@@ -149,6 +152,7 @@ struct SequenceTestView: View {
                 }
             }
             .padding(.horizontal, DesignSpacing.md)
+            .offset(y: topOffset)
         }
     }
 

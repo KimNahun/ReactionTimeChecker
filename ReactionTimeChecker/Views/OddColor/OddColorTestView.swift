@@ -21,10 +21,11 @@ struct OddColorTestView: View {
                         Image(systemName: "chevron.left").font(.ssBody).foregroundStyle(palette.primaryAction)
                     }
 
-                    // Target color indicator
-                    HStack(spacing: 4) {
-                        Text(String(localized: "Find:")).font(.ssCaption).foregroundStyle(palette.textSecondary)
-                        RoundedRectangle(cornerRadius: 4).fill(viewModel.targetColor).frame(width: 20, height: 20)
+                    // Target color indicator — large
+                    HStack(spacing: 6) {
+                        Text(String(localized: "Find:")).font(.ssBody).foregroundStyle(palette.textSecondary)
+                        RoundedRectangle(cornerRadius: 6).fill(viewModel.targetColor).frame(width: 36, height: 36)
+                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(.white.opacity(0.5), lineWidth: 2))
                     }
 
                     Spacer()
