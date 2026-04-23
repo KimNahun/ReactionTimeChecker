@@ -31,6 +31,11 @@
 "Don't tap on the red screen!" = "Don't tap on the red screen!";
 "Retry" = "Retry";
 "Results" = "Results";
+"'Reaction' Results" = "'Reaction' Results";
+"'Color Stroop' Results" = "'Color Stroop' Results";
+"'Sequence' Results" = "'Sequence' Results";
+"'Multi-Tap' Results" = "'Multi-Tap' Results";
+"'Time Sense' Results" = "'Time Sense' Results";
 "Average Reaction Time" = "Average Reaction Time";
 "Best" = "Best";
 "Worst" = "Worst";

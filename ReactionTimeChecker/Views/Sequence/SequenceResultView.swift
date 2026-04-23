@@ -33,7 +33,7 @@ struct SequenceResultView: View {
     private var mainResultView: some View {
         ScrollView {
             VStack(spacing: DesignSpacing.lg) {
-                Text(String(localized: "Results"))
+                Text(String(localized: "'Sequence' Results"))
                     .font(.ssTitle1)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.top, DesignSpacing.xl)

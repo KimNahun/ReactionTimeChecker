@@ -32,7 +32,7 @@ struct TimeSenseResultView: View {
     private var mainResultView: some View {
         ScrollView {
             VStack(spacing: DesignSpacing.lg) {
-                Text(String(localized: "Results"))
+                Text(String(localized: "'Time Sense' Results"))
                     .font(.ssTitle1)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.top, DesignSpacing.xl)

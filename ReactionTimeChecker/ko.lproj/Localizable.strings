@@ -31,6 +31,11 @@
 "Don't tap on the red screen!" = "빨간불에서는 탭하지 마세요!";
 "Retry" = "재도전";
 "Results" = "결과 발표";
+"'Reaction' Results" = "'반응속도' 결과";
+"'Color Stroop' Results" = "'색상 판별' 결과";
+"'Sequence' Results" = "'순서 탭' 결과";
+"'Multi-Tap' Results" = "'멀티 탭' 결과";
+"'Time Sense' Results" = "'시간 감각' 결과";
 "Average Reaction Time" = "평균 반응속도";
 "Best" = "최고";
 "Worst" = "최악";

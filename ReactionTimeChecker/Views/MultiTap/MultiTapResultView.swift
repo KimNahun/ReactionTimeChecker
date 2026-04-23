@@ -33,7 +33,7 @@ struct MultiTapResultView: View {
     private var mainResultView: some View {
         ScrollView {
             VStack(spacing: DesignSpacing.lg) {
-                Text(String(localized: "Results"))
+                Text(String(localized: "'Multi-Tap' Results"))
                     .font(.ssTitle1)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.top, DesignSpacing.xl)

@@ -66,7 +66,7 @@ struct ResultView: View {
         ScrollView {
             VStack(spacing: DesignSpacing.lg) {
                 // Title — always visible
-                Text("Results")
+                Text(String(localized: "'Reaction' Results"))
                     .font(.ssTitle1)
                     .foregroundStyle(palette.textPrimary)
                     .padding(.top, DesignSpacing.xl)
