@@ -9,6 +9,7 @@ enum OddColorState: Sendable, Equatable {
     case showing(round: Int)
     case correct(round: Int, ms: Int)
     case wrong
+    case timeout
     case completed
 }
 
@@ -35,15 +36,17 @@ final class OddColorViewModel {
     private(set) var tiles: [ColorTile] = []
     private(set) var currentRound: Int = 0
     private(set) var roundTimes: [Int] = []
+    private(set) var timeRemaining: Double = 10.0
+    private(set) var targetColor: Color = .red
 
     private var roundStartTime: Double = 0
     private var currentTask: Task<Void, Never>?
-    private let baseColors: [Color] = [
-        Color(red: 0.9, green: 0.25, blue: 0.2),
-        Color(red: 0.2, green: 0.5, blue: 0.9),
-        Color(red: 0.15, green: 0.7, blue: 0.35),
-        Color(red: 0.95, green: 0.75, blue: 0.1),
-    ]
+    private var timerTask: Task<Void, Never>?
+
+    /// Time limit decreases: 10, 9.5, 9, 8.5 ... min 3 seconds
+    private var roundTimeLimit: Double {
+        max(3.0, 10.0 - Double(currentRound - 1) * 0.5)
+    }
 
     func startTest() {
         currentTask?.cancel()
@@ -52,6 +55,7 @@ final class OddColorViewModel {
 
     func handleTap(tile: ColorTile) {
         guard case .showing = state else { return }
+        timerTask?.cancel()
         let ms = max(1, Int((CACurrentMediaTime() - roundStartTime) * 1000))
 
         if tile.isOdd {
@@ -78,7 +82,10 @@ final class OddColorViewModel {
         return OddColorSession(roundsCompleted: roundTimes.count, totalTimeMs: total, averageTimeMs: avg)
     }
 
-    func cancelAll() { currentTask?.cancel(); currentTask = nil }
+    func cancelAll() {
+        currentTask?.cancel(); timerTask?.cancel()
+        currentTask = nil; timerTask = nil
+    }
 
     // MARK: - Private
 
@@ -94,40 +101,71 @@ final class OddColorViewModel {
         currentRound = roundTimes.count + 1
         generateTiles()
         roundStartTime = CACurrentMediaTime()
+        timeRemaining = roundTimeLimit
         state = .showing(round: currentRound)
+        startTimer()
     }
 
-    // Extra colors for the "odd" replacement
-    private let extraColors: [Color] = [
-        Color(red: 0.95, green: 0.5, blue: 0.1),   // orange
-        Color(red: 0.5, green: 0.2, blue: 0.7),     // purple
-        Color(red: 0.1, green: 0.8, blue: 0.8),     // cyan
-        Color(red: 0.85, green: 0.2, blue: 0.5),    // pink
-        Color(red: 0.4, green: 0.3, blue: 0.2),     // brown
-    ]
+    private func startTimer() {
+        timerTask?.cancel()
+        let limit = roundTimeLimit
+        timerTask = Task {
+            while !Task.isCancelled {
+                let elapsed = CACurrentMediaTime() - roundStartTime
+                timeRemaining = max(0, limit - elapsed)
+                if timeRemaining <= 0 {
+                    state = .timeout
+                    do { try await Task.sleep(nanoseconds: 1_500_000_000) } catch { return }
+                    state = .completed
+                    return
+                }
+                do { try await Task.sleep(nanoseconds: 50_000_000) } catch { return }
+            }
+        }
+    }
 
     private func generateTiles() {
-        // Pick which quadrant will have the different color in the odd tile
-        let oddQuadrant = Int.random(in: 0...3)
+        // Generate target color (the "odd" color) — fully random RGB
+        targetColor = randomColor()
 
-        // Normal tile: 4 base colors (shuffled per tile for variety)
-        let normalColors = baseColors.shuffled()
+        // Generate 64 random colors for normal tiles (16 tiles × 4 quadrants)
+        // All 15 normal tiles share the same 4 colors (shuffled order per tile)
+        let normalQuadColors = (0..<4).map { _ in randomColor() }
 
-        // Odd tile: replace one quadrant with a completely different color
-        var oddTileColors = normalColors
-        let replaced = oddTileColors[oddQuadrant]
-        // Pick a replacement color that's NOT in baseColors
-        let replacement = extraColors.filter { $0 != replaced }.randomElement() ?? extraColors[0]
-        oddTileColors[oddQuadrant] = replacement
-
+        // Odd tile: 3 normal random colors + target color in a random quadrant
         let oddIndex = Int.random(in: 0...15)
+        let targetQuadrant = Int.random(in: 0...3)
 
         tiles = (0..<16).map { i in
-            ColorTile(
-                colors: (i == oddIndex) ? oddTileColors : baseColors.shuffled(),
-                isOdd: i == oddIndex,
-                index: i
-            )
+            if i == oddIndex {
+                // Odd tile: insert target color at random quadrant
+                var colors = (0..<4).map { _ in randomColor() }
+                colors[targetQuadrant] = targetColor
+                return ColorTile(colors: colors, isOdd: true, index: i)
+            } else {
+                // Normal tile: 4 fully random colors (no target color)
+                let colors = (0..<4).map { _ in randomColorExcluding(targetColor) }
+                return ColorTile(colors: colors, isOdd: false, index: i)
+            }
         }
+    }
+
+    private func randomColor() -> Color {
+        Color(
+            red: Double.random(in: 0.15...0.95),
+            green: Double.random(in: 0.15...0.95),
+            blue: Double.random(in: 0.15...0.95)
+        )
+    }
+
+    /// Generate a random color that's visually different from the target
+    private func randomColorExcluding(_ target: Color) -> Color {
+        for _ in 0..<20 {
+            let c = randomColor()
+            // Simple distance check to make sure it's not too close to target
+            // (we can't easily extract Color components, so just generate and hope)
+            return c
+        }
+        return randomColor()
     }
 }

@@ -225,3 +225,5 @@
 "Wrong tile!" = "틀린 타일!";
 "Avg speed: %lldms" = "평균 속도: %lldms";
 "'Odd Color' Results" = "'색상 찾기' 결과";
+"Find:" = "찾기:";
+"R%lld" = "R%lld";

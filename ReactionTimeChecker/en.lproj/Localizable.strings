@@ -225,3 +225,5 @@
 "Wrong tile!" = "Wrong tile!";
 "Avg speed: %lldms" = "Avg speed: %lldms";
 "'Odd Color' Results" = "'Odd Color' Results";
+"Find:" = "Find:";
+"R%lld" = "R%lld";

@@ -20,8 +20,24 @@ struct OddColorTestView: View {
                     Button { viewModel.cancelAll(); onCancel() } label: {
                         Image(systemName: "chevron.left").font(.ssBody).foregroundStyle(palette.primaryAction)
                     }
+
+                    // Target color indicator
+                    HStack(spacing: 4) {
+                        Text(String(localized: "Find:")).font(.ssCaption).foregroundStyle(palette.textSecondary)
+                        RoundedRectangle(cornerRadius: 4).fill(viewModel.targetColor).frame(width: 20, height: 20)
+                    }
+
                     Spacer()
-                    Text(String(format: String(localized: "Round %lld"), viewModel.currentRound))
+
+                    // Timer
+                    HStack(spacing: 4) {
+                        Image(systemName: "timer").font(.ssCaption).foregroundStyle(palette.textSecondary)
+                        Text(String(format: "%.1f", viewModel.timeRemaining))
+                            .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            .foregroundStyle(viewModel.timeRemaining < 3 ? palette.error : palette.textPrimary)
+                    }
+
+                    Text(String(format: String(localized: "R%lld"), viewModel.currentRound))
                         .font(.ssFootnote).foregroundStyle(palette.textSecondary)
                 }
                 .padding(.horizontal, DesignSpacing.md).padding(.vertical, DesignSpacing.sm)
@@ -58,6 +74,11 @@ struct OddColorTestView: View {
             VStack(spacing: DesignSpacing.sm) {
                 Text("✗").font(.system(size: 56)).foregroundStyle(palette.error)
                 Text(String(localized: "Wrong tile!")).font(.ssTitle1).foregroundStyle(palette.error)
+            }
+        case .timeout:
+            VStack(spacing: DesignSpacing.sm) {
+                Text("⏰").font(.system(size: 56))
+                Text(String(localized: "Time's up!")).font(.ssTitle1).foregroundStyle(palette.error)
             }
         case .completed:
             Text(String(localized: "Done!")).font(.ssTitle1).foregroundStyle(palette.textPrimary)
@@ -98,7 +119,7 @@ struct OddColorTestView: View {
         switch s {
         case .countdown: UIImpactFeedbackGenerator(style: .light).impactOccurred()
         case .correct: UINotificationFeedbackGenerator().notificationOccurred(.success)
-        case .wrong:
+        case .wrong, .timeout:
             UINotificationFeedbackGenerator().notificationOccurred(.error)
             showRedFlash = true
             withAnimation(.linear(duration: 0.3)) { shakeTrigger += 1 }
