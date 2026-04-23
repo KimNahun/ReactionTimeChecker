@@ -153,7 +153,7 @@ struct SequenceTestView: View {
         } label: {
             Text("\(num.value)")
                 .font(.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundStyle(num.isTapped ? palette.textSecondary.opacity(0.3) : .white)
+                .foregroundStyle(num.isTapped ? palette.textSecondary.opacity(0.15) : .white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
                 .background(
@@ -167,9 +167,9 @@ struct SequenceTestView: View {
 
     private func cellColor(num: SequenceNumber) -> some ShapeStyle {
         if num.isTapped {
-            return AnyShapeStyle(palette.surface.opacity(0.4))
+            return AnyShapeStyle(palette.surface.opacity(0.15))
         }
-        return AnyShapeStyle(palette.surface)
+        return AnyShapeStyle(palette.primaryAction.opacity(0.85))
     }
 
     // MARK: - Helpers

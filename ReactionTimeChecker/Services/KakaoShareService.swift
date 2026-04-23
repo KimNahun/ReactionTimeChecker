@@ -163,6 +163,49 @@ struct KakaoShareService {
                          buttonTitle: isKorean ? "도전하기" : "Try it", appLink: appLink)
     }
 
+    // MARK: - Flash Memory
+
+    static func shareFlashMemory(session: FlashMemorySession, grade: Grade, percentile: Int) {
+        let title = isKorean ? "\(userName)님의 순간 포착" : "\(userName)'s Flash Memory"
+        let items = [
+            ItemInfo(item: isKorean ? "라운드" : "Rounds", itemOp: "\(session.roundsCompleted)"),
+            ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),
+            ItemInfo(item: isKorean ? "등급" : "Grade", itemOp: "\(grade.emoji) \(grade.name)"),
+        ]
+        let itemContent = ItemContent(profileText: "\(userName)님의 기록", items: items)
+        let appLink = Link(webUrl: storeUrl, mobileWebUrl: storeUrl, iosExecutionParams: ["challenge": "true", "mode": "flashmemory"])
+        sendFeedTemplate(title: title, imageUrl: nil, itemContent: itemContent, buttonTitle: isKorean ? "도전하기" : "Try it", appLink: appLink)
+    }
+
+    // MARK: - Frame Match
+
+    static func shareFrameMatch(session: FrameMatchSession, grade: Grade, percentile: Int) {
+        let title = isKorean ? "\(userName)님의 액자 맞추기" : "\(userName)'s Frame Match"
+        let errStr = String(format: "%.1fpt", session.averageError)
+        let items = [
+            ItemInfo(item: isKorean ? "평균 오차" : "Avg Error", itemOp: errStr),
+            ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),
+            ItemInfo(item: isKorean ? "등급" : "Grade", itemOp: "\(grade.emoji) \(grade.name)"),
+        ]
+        let itemContent = ItemContent(profileText: "\(userName)님의 기록", items: items)
+        let appLink = Link(webUrl: storeUrl, mobileWebUrl: storeUrl, iosExecutionParams: ["challenge": "true", "mode": "framematch"])
+        sendFeedTemplate(title: title, imageUrl: nil, itemContent: itemContent, buttonTitle: isKorean ? "도전하기" : "Try it", appLink: appLink)
+    }
+
+    // MARK: - Odd Color
+
+    static func shareOddColor(session: OddColorSession, grade: Grade, percentile: Int) {
+        let title = isKorean ? "\(userName)님의 색상 찾기" : "\(userName)'s Odd Color"
+        let items = [
+            ItemInfo(item: isKorean ? "라운드" : "Rounds", itemOp: "\(session.roundsCompleted)"),
+            ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),
+            ItemInfo(item: isKorean ? "등급" : "Grade", itemOp: "\(grade.emoji) \(grade.name)"),
+        ]
+        let itemContent = ItemContent(profileText: "\(userName)님의 기록", items: items)
+        let appLink = Link(webUrl: storeUrl, mobileWebUrl: storeUrl, iosExecutionParams: ["challenge": "true", "mode": "oddcolor"])
+        sendFeedTemplate(title: title, imageUrl: nil, itemContent: itemContent, buttonTitle: isKorean ? "도전하기" : "Try it", appLink: appLink)
+    }
+
     // MARK: - Common
 
     private static func sendWithImage(_ image: UIImage?, title: String, itemContent: ItemContent,

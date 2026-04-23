@@ -185,3 +185,41 @@
 "Circles, triangles, and squares appear rapidly" = "Circles, triangles, and squares appear rapidly";
 "Tap ONLY circles — ignore other shapes!" = "Tap ONLY circles — ignore other shapes!";
 "Wrong tap = -2 seconds! You have 20 seconds" = "Wrong tap = -2 seconds! You have 20 seconds";
+
+/* Flash Memory */
+"Flash Memory" = "Flash Memory";
+"Remember numbers" = "Remember numbers";
+"Remember the flashing numbers!" = "Remember the flashing numbers!";
+"3 numbers flash briefly on screen" = "3 numbers flash briefly on screen";
+"Pick the 3 correct numbers from 5 choices" = "Pick the 3 correct numbers from 5 choices";
+"Wrong = game over! Display time gets shorter" = "Wrong = game over! Display time gets shorter";
+"Remember these!" = "Remember these!";
+"Pick the 3 numbers" = "Pick the 3 numbers";
+"Round %lld" = "Round %lld";
+"Round %lld cleared!" = "Round %lld cleared!";
+"Wrong!" = "Wrong!";
+"The correct numbers were:" = "The correct numbers were:";
+"Time's up!" = "Time's up!";
+"Rounds Survived" = "Rounds Survived";
+"Last display: %.1fs" = "Last display: %.1fs";
+"'Flash Memory' Results" = "'Flash Memory' Results";
+
+/* Frame Match */
+"Frame Match" = "Frame Match";
+"Stop in frame" = "Stop in frame";
+"Stop the box inside the frame!" = "Stop the box inside the frame!";
+"A box moves across the screen at random speed" = "A box moves across the screen at random speed";
+"Tap to stop it inside the center frame" = "Tap to stop it inside the center frame";
+"The closer to center, the better! 5 attempts" = "The closer to center, the better! 5 attempts";
+"'Frame Match' Results" = "'Frame Match' Results";
+
+/* Odd Color */
+"Odd Color" = "Odd Color";
+"Find different" = "Find different";
+"Find the different tile!" = "Find the different tile!";
+"16 tiles with 4 colors each appear" = "16 tiles with 4 colors each appear";
+"One tile has a slightly different color" = "One tile has a slightly different color";
+"Find and tap it! Wrong = game over" = "Find and tap it! Wrong = game over";
+"Wrong tile!" = "Wrong tile!";
+"Avg speed: %lldms" = "Avg speed: %lldms";
+"'Odd Color' Results" = "'Odd Color' Results";

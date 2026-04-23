@@ -185,3 +185,41 @@
 "Circles, triangles, and squares appear rapidly" = "원, 세모, 네모가 빠르게 나타납니다";
 "Tap ONLY circles — ignore other shapes!" = "원만 탭하세요 — 다른 도형은 무시!";
 "Wrong tap = -2 seconds! You have 20 seconds" = "틀리면 -2초 감점! 제한시간 20초";
+
+/* Flash Memory */
+"Flash Memory" = "순간 포착";
+"Remember numbers" = "숫자 기억";
+"Remember the flashing numbers!" = "번쩍이는 숫자를 기억하세요!";
+"3 numbers flash briefly on screen" = "3개의 숫자가 잠깐 표시됩니다";
+"Pick the 3 correct numbers from 5 choices" = "5개 중 정답 3개를 고르세요";
+"Wrong = game over! Display time gets shorter" = "틀리면 끝! 표시 시간은 점점 줄어듭니다";
+"Remember these!" = "기억하세요!";
+"Pick the 3 numbers" = "3개를 고르세요";
+"Round %lld" = "%lld라운드";
+"Round %lld cleared!" = "%lld라운드 클리어!";
+"Wrong!" = "틀렸어요!";
+"The correct numbers were:" = "정답은:";
+"Time's up!" = "시간 초과!";
+"Rounds Survived" = "생존 라운드";
+"Last display: %.1fs" = "마지막 표시: %.1f초";
+"'Flash Memory' Results" = "'순간 포착' 결과";
+
+/* Frame Match */
+"Frame Match" = "액자 맞추기";
+"Stop in frame" = "액자에 맞추기";
+"Stop the box inside the frame!" = "사각형을 액자 안에 멈추세요!";
+"A box moves across the screen at random speed" = "사각형이 랜덤 속도로 이동합니다";
+"Tap to stop it inside the center frame" = "탭해서 가운데 액자 안에 멈추세요";
+"The closer to center, the better! 5 attempts" = "정중앙에 가까울수록 좋아요! 5회 시도";
+"'Frame Match' Results" = "'액자 맞추기' 결과";
+
+/* Odd Color */
+"Odd Color" = "색상 찾기";
+"Find different" = "다른 색 찾기";
+"Find the different tile!" = "다른 타일을 찾으세요!";
+"16 tiles with 4 colors each appear" = "4가지 색으로 된 16개 타일이 표시됩니다";
+"One tile has a slightly different color" = "1개의 타일만 색이 살짝 다릅니다";
+"Find and tap it! Wrong = game over" = "찾아서 탭하세요! 틀리면 끝";
+"Wrong tile!" = "틀린 타일!";
+"Avg speed: %lldms" = "평균 속도: %lldms";
+"'Odd Color' Results" = "'색상 찾기' 결과";

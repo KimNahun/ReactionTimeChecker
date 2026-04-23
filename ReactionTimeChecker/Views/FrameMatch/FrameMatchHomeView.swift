@@ -1,0 +1,51 @@
+// Views/FrameMatch/FrameMatchHomeView.swift
+import SwiftUI
+import TopDesignSystem
+
+struct FrameMatchHomeView: View {
+    let onStart: () -> Void
+    var onBack: (() -> Void)? = nil
+    @Environment(\.designPalette) var palette
+
+    var body: some View {
+        ZStack {
+            palette.background.ignoresSafeArea()
+            VStack(spacing: 0) {
+                if let onBack {
+                    HStack {
+                        Button { onBack() } label: {
+                            HStack(spacing: 4) { Image(systemName: "chevron.left").font(.ssBody); Text(String(localized: "Back")).font(.ssBody) }.foregroundStyle(palette.primaryAction)
+                        }.padding(.horizontal, DesignSpacing.md).padding(.top, DesignSpacing.sm); Spacer()
+                    }
+                }
+                ScrollView {
+                    VStack(spacing: DesignSpacing.lg) {
+                        Spacer().frame(height: onBack != nil ? DesignSpacing.sm : DesignSpacing.xl)
+                        Text(String(localized: "Frame Match")).font(.ssTitle1).foregroundStyle(palette.textPrimary)
+                        Text("🖼️").font(.system(size: 72))
+                        Text(String(localized: "Stop the box inside the frame!")).font(.ssBody).foregroundStyle(palette.textSecondary)
+                        SurfaceCard(elevation: .raised) {
+                            VStack(spacing: DesignSpacing.md) {
+                                Text(String(localized: "How to Play")).font(.ssTitle2).foregroundStyle(palette.textPrimary)
+                                VStack(alignment: .leading, spacing: DesignSpacing.sm) {
+                                    ruleRow(icon: "1.circle.fill", text: String(localized: "A box moves across the screen at random speed"))
+                                    ruleRow(icon: "2.circle.fill", text: String(localized: "Tap to stop it inside the center frame"))
+                                    ruleRow(icon: "3.circle.fill", text: String(localized: "The closer to center, the better! 5 attempts"))
+                                }
+                            }.padding(DesignSpacing.md)
+                        }.padding(.horizontal, DesignSpacing.md)
+                        PillButton(String(localized: "Start")) { onStart() }.padding(.horizontal, DesignSpacing.lg)
+                        Spacer().frame(height: DesignSpacing.xl)
+                    }
+                }
+            }
+        }
+    }
+
+    private func ruleRow(icon: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: DesignSpacing.sm) {
+            Image(systemName: icon).font(.ssBody).foregroundStyle(palette.primaryAction).frame(width: 24)
+            Text(text).font(.ssFootnote).foregroundStyle(palette.textSecondary).fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}

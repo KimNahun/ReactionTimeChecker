@@ -18,22 +18,30 @@ struct MainTabView: View {
         case multiTapHome, multiTapTest, multiTapResult(session: MultiTapSession)
         // TimeSense
         case timeSenseHome, timeSenseTest(timerVisible: Bool), timeSenseResult(session: TimeSenseSession)
+        // FlashMemory
+        case flashMemoryHome, flashMemoryTest, flashMemoryResult(session: FlashMemorySession)
+        // FrameMatch
+        case frameMatchHome, frameMatchTest, frameMatchResult(session: FrameMatchSession)
+        // OddColor
+        case oddColorHome, oddColorTest, oddColorResult(session: OddColorSession)
 
         static func == (lhs: Destination, rhs: Destination) -> Bool {
             switch (lhs, rhs) {
             case (.none, .none),
                  (.reactionHome, .reactionHome),
                  (.stroopHome, .stroopHome),
-                 (.sequenceHome, .sequenceHome),
-                 (.sequenceTest, .sequenceTest),
-                 (.multiTapHome, .multiTapHome),
-                 (.multiTapTest, .multiTapTest),
+                 (.sequenceHome, .sequenceHome), (.sequenceTest, .sequenceTest),
+                 (.multiTapHome, .multiTapHome), (.multiTapTest, .multiTapTest),
                  (.timeSenseHome, .timeSenseHome),
-                 (.reactionResult, .reactionResult),
-                 (.stroopResult, .stroopResult),
-                 (.sequenceResult, .sequenceResult),
-                 (.multiTapResult, .multiTapResult),
-                 (.timeSenseResult, .timeSenseResult):
+                 (.flashMemoryHome, .flashMemoryHome), (.flashMemoryTest, .flashMemoryTest),
+                 (.frameMatchHome, .frameMatchHome), (.frameMatchTest, .frameMatchTest),
+                 (.oddColorHome, .oddColorHome), (.oddColorTest, .oddColorTest),
+                 (.reactionResult, .reactionResult), (.stroopResult, .stroopResult),
+                 (.sequenceResult, .sequenceResult), (.multiTapResult, .multiTapResult),
+                 (.timeSenseResult, .timeSenseResult),
+                 (.flashMemoryResult, .flashMemoryResult),
+                 (.frameMatchResult, .frameMatchResult),
+                 (.oddColorResult, .oddColorResult):
                 return true
             case (.reactionTest(let a), .reactionTest(let b)): return a == b
             case (.stroopTest(let a), .stroopTest(let b)): return a == b
@@ -144,12 +152,41 @@ struct MainTabView: View {
                 )
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .timeSenseResult(let s):
-                TimeSenseResultView(
-                    session: s,
-                    onPlayAgain: { go(.timeSenseHome) },
-                    onHome: { goHome() }
-                )
-                .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                TimeSenseResultView(session: s, onPlayAgain: { go(.timeSenseHome) }, onHome: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+
+            // MARK: FlashMemory
+            case .flashMemoryHome:
+                FlashMemoryHomeView(onStart: { go(.flashMemoryTest) }, onBack: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .flashMemoryTest:
+                FlashMemoryTestView(onComplete: { s in go(.flashMemoryResult(session: s)) }, onCancel: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .flashMemoryResult(let s):
+                FlashMemoryResultView(session: s, onPlayAgain: { go(.flashMemoryTest) }, onHome: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+
+            // MARK: FrameMatch
+            case .frameMatchHome:
+                FrameMatchHomeView(onStart: { go(.frameMatchTest) }, onBack: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .frameMatchTest:
+                FrameMatchTestView(onComplete: { s in go(.frameMatchResult(session: s)) }, onCancel: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .frameMatchResult(let s):
+                FrameMatchResultView(session: s, onPlayAgain: { go(.frameMatchTest) }, onHome: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+
+            // MARK: OddColor
+            case .oddColorHome:
+                OddColorHomeView(onStart: { go(.oddColorTest) }, onBack: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .oddColorTest:
+                OddColorTestView(onComplete: { s in go(.oddColorResult(session: s)) }, onCancel: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .oddColorResult(let s):
+                OddColorResultView(session: s, onPlayAgain: { go(.oddColorTest) }, onHome: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
             }
 
             // Name input overlay
@@ -238,11 +275,15 @@ struct MainTabView: View {
                         testCard(emoji: "⏱️", title: String(localized: "Time Sense"), subtitle: String(localized: "Hit 10.00s"), isEnabled: true) {
                             go(.timeSenseHome)
                         }
-                        // Coming soon
-                        testCard(emoji: "🚫", title: String(localized: "Go/No-Go"), subtitle: String(localized: "Coming soon"), isEnabled: false) {}
-                        testCard(emoji: "🔊", title: String(localized: "Sound"), subtitle: String(localized: "Coming soon"), isEnabled: false) {}
-                        testCard(emoji: "🧠", title: String(localized: "Memory"), subtitle: String(localized: "Coming soon"), isEnabled: false) {}
-                        testCard(emoji: "🎯", title: String(localized: "Aim"), subtitle: String(localized: "Coming soon"), isEnabled: false) {}
+                        testCard(emoji: "🔦", title: String(localized: "Flash Memory"), subtitle: String(localized: "Remember numbers"), isEnabled: true) {
+                            go(.flashMemoryHome)
+                        }
+                        testCard(emoji: "🖼️", title: String(localized: "Frame Match"), subtitle: String(localized: "Stop in frame"), isEnabled: true) {
+                            go(.frameMatchHome)
+                        }
+                        testCard(emoji: "⬛", title: String(localized: "Odd Color"), subtitle: String(localized: "Find different"), isEnabled: true) {
+                            go(.oddColorHome)
+                        }
                     }
                     .padding(.horizontal, DesignSpacing.md)
 
@@ -294,6 +335,15 @@ struct MainTabView: View {
         case .timeSenseHome: "tsHome"
         case .timeSenseTest: "tsTest"
         case .timeSenseResult: "tsResult"
+        case .flashMemoryHome: "fmHome"
+        case .flashMemoryTest: "fmTest"
+        case .flashMemoryResult: "fmResult"
+        case .frameMatchHome: "frHome"
+        case .frameMatchTest: "frTest"
+        case .frameMatchResult: "frResult"
+        case .oddColorHome: "ocHome"
+        case .oddColorTest: "ocTest"
+        case .oddColorResult: "ocResult"
         }
     }
 }

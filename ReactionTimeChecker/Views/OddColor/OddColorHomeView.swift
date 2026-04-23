@@ -1,0 +1,51 @@
+// Views/OddColor/OddColorHomeView.swift
+import SwiftUI
+import TopDesignSystem
+
+struct OddColorHomeView: View {
+    let onStart: () -> Void
+    var onBack: (() -> Void)? = nil
+    @Environment(\.designPalette) var palette
+
+    var body: some View {
+        ZStack {
+            palette.background.ignoresSafeArea()
+            VStack(spacing: 0) {
+                if let onBack {
+                    HStack {
+                        Button { onBack() } label: {
+                            HStack(spacing: 4) { Image(systemName: "chevron.left").font(.ssBody); Text(String(localized: "Back")).font(.ssBody) }.foregroundStyle(palette.primaryAction)
+                        }.padding(.horizontal, DesignSpacing.md).padding(.top, DesignSpacing.sm); Spacer()
+                    }
+                }
+                ScrollView {
+                    VStack(spacing: DesignSpacing.lg) {
+                        Spacer().frame(height: onBack != nil ? DesignSpacing.sm : DesignSpacing.xl)
+                        Text(String(localized: "Odd Color")).font(.ssTitle1).foregroundStyle(palette.textPrimary)
+                        Text("⬛").font(.system(size: 72))
+                        Text(String(localized: "Find the different tile!")).font(.ssBody).foregroundStyle(palette.textSecondary)
+                        SurfaceCard(elevation: .raised) {
+                            VStack(spacing: DesignSpacing.md) {
+                                Text(String(localized: "How to Play")).font(.ssTitle2).foregroundStyle(palette.textPrimary)
+                                VStack(alignment: .leading, spacing: DesignSpacing.sm) {
+                                    ruleRow(icon: "1.circle.fill", text: String(localized: "16 tiles with 4 colors each appear"))
+                                    ruleRow(icon: "2.circle.fill", text: String(localized: "One tile has a slightly different color"))
+                                    ruleRow(icon: "3.circle.fill", text: String(localized: "Find and tap it! Wrong = game over"))
+                                }
+                            }.padding(DesignSpacing.md)
+                        }.padding(.horizontal, DesignSpacing.md)
+                        PillButton(String(localized: "Start")) { onStart() }.padding(.horizontal, DesignSpacing.lg)
+                        Spacer().frame(height: DesignSpacing.xl)
+                    }
+                }
+            }
+        }
+    }
+
+    private func ruleRow(icon: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: DesignSpacing.sm) {
+            Image(systemName: icon).font(.ssBody).foregroundStyle(palette.primaryAction).frame(width: 24)
+            Text(text).font(.ssFootnote).foregroundStyle(palette.textSecondary).fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
