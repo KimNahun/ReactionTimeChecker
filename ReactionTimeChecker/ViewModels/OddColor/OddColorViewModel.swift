@@ -1,6 +1,5 @@
 // ViewModels/OddColor/OddColorViewModel.swift
 import SwiftUI
-import UIKit
 import Observation
 import QuartzCore
 
@@ -98,42 +97,37 @@ final class OddColorViewModel {
         state = .showing(round: currentRound)
     }
 
-    private func generateTiles() {
-        // Difficulty: color difference decreases with rounds
-        let diff = max(0.08, 0.35 - Double(currentRound - 1) * 0.018)
+    // Extra colors for the "odd" replacement
+    private let extraColors: [Color] = [
+        Color(red: 0.95, green: 0.5, blue: 0.1),   // orange
+        Color(red: 0.5, green: 0.2, blue: 0.7),     // purple
+        Color(red: 0.1, green: 0.8, blue: 0.8),     // cyan
+        Color(red: 0.85, green: 0.2, blue: 0.5),    // pink
+        Color(red: 0.4, green: 0.3, blue: 0.2),     // brown
+    ]
 
-        // Pick which quadrant will be different in the odd tile
+    private func generateTiles() {
+        // Pick which quadrant will have the different color in the odd tile
         let oddQuadrant = Int.random(in: 0...3)
 
-        // Normal tile: 4 base colors in shuffled order
-        let normalOrder = baseColors.shuffled()
+        // Normal tile: 4 base colors (shuffled per tile for variety)
+        let normalColors = baseColors.shuffled()
 
-        // Odd tile: same colors but one quadrant is slightly shifted
-        var oddColors = normalOrder
-        let original = oddColors[oddQuadrant]
-        // Shift the color
-        oddColors[oddQuadrant] = shiftColor(original, by: diff)
+        // Odd tile: replace one quadrant with a completely different color
+        var oddTileColors = normalColors
+        let replaced = oddTileColors[oddQuadrant]
+        // Pick a replacement color that's NOT in baseColors
+        let replacement = extraColors.filter { $0 != replaced }.randomElement() ?? extraColors[0]
+        oddTileColors[oddQuadrant] = replacement
 
         let oddIndex = Int.random(in: 0...15)
 
         tiles = (0..<16).map { i in
-            let colors = (i == oddIndex) ? oddColors : normalOrder.shuffled()
-            // Keep same set of colors, just different order for normal tiles
-            // But odd tile has the shifted color
-            return ColorTile(
-                colors: (i == oddIndex) ? oddColors : baseColors.shuffled(),
+            ColorTile(
+                colors: (i == oddIndex) ? oddTileColors : baseColors.shuffled(),
                 isOdd: i == oddIndex,
                 index: i
             )
         }
-    }
-
-    private func shiftColor(_ color: Color, by amount: Double) -> Color {
-        // Create a slightly different shade
-        let components = UIColor(color).cgColor.components ?? [0, 0, 0, 1]
-        let r = min(1, max(0, components[0] + amount))
-        let g = min(1, max(0, components[1] - amount * 0.5))
-        let b = min(1, max(0, components[2] - amount * 0.3))
-        return Color(red: r, green: g, blue: b)
     }
 }
