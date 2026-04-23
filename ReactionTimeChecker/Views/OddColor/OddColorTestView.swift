@@ -16,34 +16,38 @@ struct OddColorTestView: View {
             if showRedFlash { Color.red.opacity(0.3).ignoresSafeArea().transition(.opacity) }
 
             VStack(spacing: 0) {
+                // HUD bar
                 HStack {
                     Button { viewModel.cancelAll(); onCancel() } label: {
                         Image(systemName: "chevron.left").font(.ssBody).foregroundStyle(palette.primaryAction)
                     }
-
-                    // Target color indicator — slightly smaller than one tile
-                    HStack(spacing: 6) {
-                        Text(String(localized: "Find:")).font(.ssBody).foregroundStyle(palette.textSecondary)
-                        RoundedRectangle(cornerRadius: 8).fill(viewModel.targetColor).frame(width: 60, height: 60)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white.opacity(0.6), lineWidth: 3))
-                    }
-
                     Spacer()
-
-                    // Timer
                     HStack(spacing: 4) {
                         Image(systemName: "timer").font(.ssCaption).foregroundStyle(palette.textSecondary)
                         Text(String(format: "%.1f", viewModel.timeRemaining))
                             .font(.system(size: 16, weight: .bold, design: .monospaced))
                             .foregroundStyle(viewModel.timeRemaining < 3 ? palette.error : palette.textPrimary)
                     }
-
                     Text(String(format: String(localized: "R%lld"), viewModel.currentRound))
                         .font(.ssFootnote).foregroundStyle(palette.textSecondary)
                 }
                 .padding(.horizontal, DesignSpacing.md).padding(.vertical, DesignSpacing.sm)
                 .background(Capsule().fill(.ultraThinMaterial))
                 .padding(.horizontal, DesignSpacing.md).padding(.top, DesignSpacing.sm)
+
+                // Target color — standalone above the grid
+                if case .showing = viewModel.state {
+                    VStack(spacing: 4) {
+                        Text(String(localized: "Find this color"))
+                            .font(.ssCaption)
+                            .foregroundStyle(palette.textSecondary)
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(viewModel.targetColor)
+                            .frame(width: 64, height: 64)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(palette.textPrimary.opacity(0.4), lineWidth: 2))
+                    }
+                    .padding(.top, DesignSpacing.md)
+                }
 
                 Spacer()
                 stateContent

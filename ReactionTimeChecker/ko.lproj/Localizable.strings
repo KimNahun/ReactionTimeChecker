@@ -226,4 +226,5 @@
 "Avg speed: %lldms" = "평균 속도: %lldms";
 "'Odd Color' Results" = "'색상 찾기' 결과";
 "Find:" = "찾기:";
+"Find this color" = "이 색을 찾으세요";
 "R%lld" = "R%lld";
