@@ -5,7 +5,7 @@ import KakaoSDKCommon
 
 @main
 struct ReactionTimeCheckerApp: App {
-    @State private var phase: AppPhase = .home
+    @State private var deepLinkMode: String?
 
     init() {
         KakaoSDK.initSDK(appKey: Secrets.kakaoAppKey)
@@ -13,44 +13,17 @@ struct ReactionTimeCheckerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                switch phase {
-                case .home:
-                    HomeView(phase: $phase)
-                        .transition(
-                            .opacity.combined(with: .scale(scale: 0.98))
-                        )
-
-                case .testing(let rounds):
-                    TestView(rounds: rounds, phase: $phase)
-                        .transition(
-                            .opacity.combined(with: .scale(scale: 0.98))
-                        )
-
-                case .result(let session):
-                    ResultView(session: session, phase: $phase)
-                        .transition(
-                            .opacity.combined(with: .scale(scale: 0.98))
-                        )
+            MainTabView(deepLinkMode: $deepLinkMode)
+                .designTheme(.airbnb)
+                .onOpenURL { url in
+                    handleDeepLink(url)
                 }
-            }
-            .animation(.smooth(duration: 0.35), value: phaseIdentifier)
-            .designTheme(.airbnb)
-            .onOpenURL { url in
-                handleDeepLink(url)
-            }
         }
     }
 
     private func handleDeepLink(_ url: URL) {
         print("[DeepLink] Received URL: \(url.absoluteString)")
 
-        // 카카오 딥링크 URL 형식 예시:
-        //   kakaob7a...://kakaolink?challenge=true&targetMs=215
-        //   kakaob7a...://challenge=true&targetMs=215
-        //   kakaob7a...://?challenge=true&targetMs=215
-
-        // URLComponents로 query 파싱 시도
         let urlString = url.absoluteString
         var params: [String: String] = [:]
 
@@ -63,7 +36,6 @@ struct ReactionTimeCheckerApp: App {
             }
         }
 
-        // URLComponents 파싱 실패 시 수동 파싱 (카카오가 비표준 형식을 쓸 수 있음)
         if params.isEmpty, let range = urlString.range(of: "?") {
             let queryString = String(urlString[range.upperBound...])
             for pair in queryString.split(separator: "&") {
@@ -78,16 +50,8 @@ struct ReactionTimeCheckerApp: App {
 
         if params["challenge"] == "true" {
             withAnimation(.smooth(duration: 0.35)) {
-                phase = .home
+                deepLinkMode = params["mode"] // nil = reaction, "stroop" = stroop
             }
-        }
-    }
-
-    private var phaseIdentifier: String {
-        switch phase {
-        case .home:        return "home"
-        case .testing:     return "testing"
-        case .result:      return "result"
         }
     }
 }

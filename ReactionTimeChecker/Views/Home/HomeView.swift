@@ -4,6 +4,7 @@ import TopDesignSystem
 
 struct HomeView: View {
     @Binding var phase: AppPhase
+    var onBack: (() -> Void)? = nil
     @State private var selectedRounds: Int = 5
     @Environment(\.designPalette) var palette
 
@@ -12,9 +13,30 @@ struct HomeView: View {
             palette.background
                 .ignoresSafeArea()
 
+            VStack(spacing: 0) {
+                // Back button
+                if let onBack {
+                    HStack {
+                        Button {
+                            onBack()
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: "chevron.left")
+                                    .font(.ssBody)
+                                Text(String(localized: "Back"))
+                                    .font(.ssBody)
+                            }
+                            .foregroundStyle(palette.primaryAction)
+                        }
+                        .padding(.horizontal, DesignSpacing.md)
+                        .padding(.top, DesignSpacing.sm)
+                        Spacer()
+                    }
+                }
+
             ScrollView {
                 VStack(spacing: DesignSpacing.lg) {
-                    Spacer().frame(height: DesignSpacing.xl)
+                    Spacer().frame(height: onBack != nil ? DesignSpacing.sm : DesignSpacing.xl)
 
                     // App title
                     Text("QuickTap")
@@ -67,6 +89,7 @@ struct HomeView: View {
 
                     Spacer().frame(height: DesignSpacing.xl)
                 }
+            }
             }
         }
     }
