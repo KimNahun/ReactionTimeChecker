@@ -206,6 +206,20 @@ struct KakaoShareService {
         sendFeedTemplate(title: title, imageUrl: nil, itemContent: itemContent, buttonTitle: isKorean ? "도전하기" : "Try it", appLink: appLink)
     }
 
+    // MARK: - Biggest Circle
+
+    static func shareBiggestCircle(session: BiggestCircleSession, grade: Grade, percentile: Int) {
+        let title = isKorean ? "\(userName)님의 '큰 원 찾기' 기록" : "\(userName)'s 'Biggest Circle' Record"
+        let items = [
+            ItemInfo(item: isKorean ? "라운드" : "Rounds", itemOp: "\(session.roundsCompleted)"),
+            ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),
+            ItemInfo(item: isKorean ? "등급" : "Grade", itemOp: "\(grade.emoji) \(grade.name)"),
+        ]
+        let itemContent = ItemContent(profileText: "\(userName)님의 기록", items: items)
+        let appLink = Link(webUrl: storeUrl, mobileWebUrl: storeUrl, iosExecutionParams: ["challenge": "true", "mode": "biggestcircle"])
+        sendFeedTemplate(title: title, imageUrl: nil, itemContent: itemContent, buttonTitle: isKorean ? "도전하기" : "Try it", appLink: appLink)
+    }
+
     // MARK: - Common
 
     private static func sendWithImage(_ image: UIImage?, title: String, itemContent: ItemContent,

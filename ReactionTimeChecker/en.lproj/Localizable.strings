@@ -227,4 +227,14 @@
 "'Odd Color' Results" = "'Odd Color' Results";
 "Find:" = "Find:";
 "Find this color" = "Find this color";
+
+/* Biggest Circle */
+"Biggest Circle" = "Biggest Circle";
+"Find biggest" = "Find biggest";
+"Find the biggest circle!" = "Find the biggest circle!";
+"5 circles appear at random positions" = "5 circles appear at random positions";
+"Tap the BIGGEST one!" = "Tap the BIGGEST one!";
+"Size difference shrinks, time limit drops!" = "Size difference shrinks, time limit drops!";
+"Not the biggest!" = "Not the biggest!";
+"'Biggest Circle' Results" = "'Biggest Circle' Results";
 "R%lld" = "R%lld";

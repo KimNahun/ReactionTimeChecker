@@ -227,4 +227,14 @@
 "'Odd Color' Results" = "'색상 찾기' 결과";
 "Find:" = "찾기:";
 "Find this color" = "이 색을 찾으세요";
+
+/* Biggest Circle */
+"Biggest Circle" = "큰 원 찾기";
+"Find biggest" = "가장 큰 원";
+"Find the biggest circle!" = "가장 큰 원을 찾으세요!";
+"5 circles appear at random positions" = "5개의 원이 랜덤 위치에 나타납니다";
+"Tap the BIGGEST one!" = "가장 큰 원을 탭하세요!";
+"Size difference shrinks, time limit drops!" = "크기 차이는 줄고, 시간도 줄어듭니다!";
+"Not the biggest!" = "가장 큰 원이 아닙니다!";
+"'Biggest Circle' Results" = "'큰 원 찾기' 결과";
 "R%lld" = "R%lld";

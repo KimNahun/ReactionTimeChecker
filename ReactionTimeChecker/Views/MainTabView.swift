@@ -24,6 +24,8 @@ struct MainTabView: View {
         case frameMatchHome, frameMatchTest, frameMatchResult(session: FrameMatchSession)
         // OddColor
         case oddColorHome, oddColorTest, oddColorResult(session: OddColorSession)
+        // BiggestCircle
+        case biggestCircleHome, biggestCircleTest, biggestCircleResult(session: BiggestCircleSession)
 
         static func == (lhs: Destination, rhs: Destination) -> Bool {
             switch (lhs, rhs) {
@@ -36,12 +38,14 @@ struct MainTabView: View {
                  (.flashMemoryHome, .flashMemoryHome), (.flashMemoryTest, .flashMemoryTest),
                  (.frameMatchHome, .frameMatchHome), (.frameMatchTest, .frameMatchTest),
                  (.oddColorHome, .oddColorHome), (.oddColorTest, .oddColorTest),
+                 (.biggestCircleHome, .biggestCircleHome), (.biggestCircleTest, .biggestCircleTest),
                  (.reactionResult, .reactionResult), (.stroopResult, .stroopResult),
                  (.sequenceResult, .sequenceResult), (.multiTapResult, .multiTapResult),
                  (.timeSenseResult, .timeSenseResult),
                  (.flashMemoryResult, .flashMemoryResult),
                  (.frameMatchResult, .frameMatchResult),
-                 (.oddColorResult, .oddColorResult):
+                 (.oddColorResult, .oddColorResult),
+                 (.biggestCircleResult, .biggestCircleResult):
                 return true
             case (.reactionTest(let a), .reactionTest(let b)): return a == b
             case (.stroopTest(let a), .stroopTest(let b)): return a == b
@@ -187,6 +191,17 @@ struct MainTabView: View {
             case .oddColorResult(let s):
                 OddColorResultView(session: s, onPlayAgain: { go(.oddColorTest) }, onHome: { goHome() })
                     .transition(.opacity.combined(with: .scale(scale: 0.98)))
+
+            // MARK: BiggestCircle
+            case .biggestCircleHome:
+                BiggestCircleHomeView(onStart: { go(.biggestCircleTest) }, onBack: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .biggestCircleTest:
+                BiggestCircleTestView(onComplete: { s in go(.biggestCircleResult(session: s)) }, onCancel: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            case .biggestCircleResult(let s):
+                BiggestCircleResultView(session: s, onPlayAgain: { go(.biggestCircleTest) }, onHome: { goHome() })
+                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
             }
 
             // Name input overlay
@@ -284,6 +299,9 @@ struct MainTabView: View {
                         testCard(emoji: "⬛", title: String(localized: "Odd Color"), subtitle: String(localized: "Find different"), isEnabled: true) {
                             go(.oddColorHome)
                         }
+                        testCard(emoji: "📐", title: String(localized: "Biggest Circle"), subtitle: String(localized: "Find biggest"), isEnabled: true) {
+                            go(.biggestCircleHome)
+                        }
                     }
                     .padding(.horizontal, DesignSpacing.md)
 
@@ -344,6 +362,9 @@ struct MainTabView: View {
         case .oddColorHome: "ocHome"
         case .oddColorTest: "ocTest"
         case .oddColorResult: "ocResult"
+        case .biggestCircleHome: "bcHome"
+        case .biggestCircleTest: "bcTest"
+        case .biggestCircleResult: "bcResult"
         }
     }
 }
