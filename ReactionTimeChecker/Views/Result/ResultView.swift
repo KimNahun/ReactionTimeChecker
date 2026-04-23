@@ -298,9 +298,10 @@ struct ResultView: View {
         guard let image = cardView.renderImage() else { return }
 
         let isKorean = Locale.current.language.languageCode?.identifier == "ko"
+        let name = UserNameService.name
         let text = isKorean
-            ? "\(viewModel.grade.emoji) \(session.averageMs)ms · 상위 \(viewModel.percentile)% — QuickTap"
-            : "\(viewModel.grade.emoji) \(session.averageMs)ms · Top \(viewModel.percentile)% — QuickTap"
+            ? "\(viewModel.grade.emoji) \(name)님의 반응속도: \(session.averageMs)ms · 상위 \(viewModel.percentile)% — QuickTap"
+            : "\(viewModel.grade.emoji) \(name)'s Reaction: \(session.averageMs)ms · Top \(viewModel.percentile)% — QuickTap"
 
         let activityVC = UIActivityViewController(
             activityItems: [text, image],

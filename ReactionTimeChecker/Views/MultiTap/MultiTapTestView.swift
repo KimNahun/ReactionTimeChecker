@@ -8,11 +8,19 @@ struct MultiTapTestView: View {
 
     @State private var viewModel = MultiTapViewModel()
     @Environment(\.designPalette) var palette
+    @State private var shakeTrigger: CGFloat = 0
 
     var body: some View {
         ZStack {
             palette.background
                 .ignoresSafeArea()
+
+            // Wrong tap red flash
+            if viewModel.showWrongFlash {
+                Color.red.opacity(0.3)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+            }
 
             switch viewModel.state {
             case .idle:
@@ -43,9 +51,17 @@ struct MultiTapTestView: View {
                     }
             }
         }
+        .modifier(ShakeEffect(animatableData: shakeTrigger))
+        .animation(.easeInOut(duration: 0.1), value: viewModel.showWrongFlash)
         .onChange(of: viewModel.state) { _, newState in
             if case .countdown = newState {
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            }
+        }
+        .onChange(of: viewModel.wrongTaps) { _, _ in
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            withAnimation(.linear(duration: 0.3)) {
+                shakeTrigger += 1
             }
         }
         .onAppear { viewModel.startTest() }
@@ -57,7 +73,6 @@ struct MultiTapTestView: View {
     private var playingView: some View {
         GeometryReader { geo in
             ZStack {
-                // Shapes
                 ForEach(viewModel.shapes.filter { !$0.isCollected }) { shape in
                     shapeView(shape)
                         .position(
@@ -73,7 +88,7 @@ struct MultiTapTestView: View {
                         }
                 }
             }
-            .animation(.easeOut(duration: 0.15), value: viewModel.shapes.map { $0.id })
+            .animation(.easeOut(duration: 0.12), value: viewModel.shapes.map { $0.id })
 
             // HUD
             VStack {
@@ -86,6 +101,16 @@ struct MultiTapTestView: View {
 
     private var hud: some View {
         HStack {
+            // Back button
+            Button {
+                viewModel.cancelAll()
+                onCancel()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.ssBody)
+                    .foregroundStyle(palette.primaryAction)
+            }
+
             // Timer
             HStack(spacing: 4) {
                 Image(systemName: "timer")
@@ -99,7 +124,6 @@ struct MultiTapTestView: View {
 
             Spacer()
 
-            // Score
             HStack(spacing: 8) {
                 Text("○ \(viewModel.circlesTapped)")
                     .font(.ssFootnote)
@@ -120,27 +144,25 @@ struct MultiTapTestView: View {
     @ViewBuilder
     private func shapeView(_ shape: SpawnedShape) -> some View {
         let size: CGFloat = 44
+        let shapeColor = palette.primaryAction
         switch shape.kind {
         case .circle:
             Circle()
-                .fill(Color.blue.opacity(0.85))
+                .fill(shapeColor)
                 .frame(width: size, height: size)
-                .overlay(Circle().stroke(.white.opacity(0.3), lineWidth: 2))
 
         case .triangle:
             TriangleShape()
-                .fill(Color.orange.opacity(0.7))
+                .fill(shapeColor)
                 .frame(width: size, height: size)
 
         case .square:
             RoundedRectangle(cornerRadius: 6)
-                .fill(Color.red.opacity(0.7))
+                .fill(shapeColor)
                 .frame(width: size - 4, height: size - 4)
         }
     }
 }
-
-// MARK: - Triangle Shape
 
 private struct TriangleShape: Shape {
     func path(in rect: CGRect) -> Path {

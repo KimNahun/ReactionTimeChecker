@@ -18,7 +18,22 @@ struct TimeSenseTestView: View {
                 .animation(.easeInOut(duration: 0.12), value: backgroundKey)
 
             VStack(spacing: 0) {
-                EmptyView()
+                // Back button
+                HStack {
+                    Button {
+                        viewModel.cancelAll()
+                        onCancel()
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "chevron.left").font(.ssBody)
+                            Text(String(localized: "Back")).font(.ssBody)
+                        }
+                        .foregroundStyle(palette.primaryAction)
+                    }
+                    .padding(.horizontal, DesignSpacing.md)
+                    .padding(.top, DesignSpacing.sm)
+                    Spacer()
+                }
 
                 Spacer()
                 stateContent

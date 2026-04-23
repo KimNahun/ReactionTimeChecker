@@ -43,6 +43,7 @@ struct MainTabView: View {
 
     @State private var destination: Destination = .none
     @State private var reactionPhase: AppPhase = .home
+    @State private var showNameInput: Bool = false
 
     var body: some View {
         ZStack {
@@ -77,8 +78,12 @@ struct MainTabView: View {
                 )
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .stroopResult(let s):
-                StroopResultView(session: s) { goHome() }
-                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                StroopResultView(
+                    session: s,
+                    onPlayAgain: { go(.stroopTest(stimuli: 30)) },
+                    onHome: { goHome() }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
             // MARK: Sequence
             case .sequenceTest:
@@ -88,8 +93,12 @@ struct MainTabView: View {
                 )
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .sequenceResult(let s):
-                SequenceResultView(session: s) { goHome() }
-                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                SequenceResultView(
+                    session: s,
+                    onPlayAgain: { go(.sequenceTest) },
+                    onHome: { goHome() }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
             // MARK: MultiTap
             case .multiTapTest:
@@ -99,8 +108,12 @@ struct MainTabView: View {
                 )
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .multiTapResult(let s):
-                MultiTapResultView(session: s) { goHome() }
-                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                MultiTapResultView(
+                    session: s,
+                    onPlayAgain: { go(.multiTapTest) },
+                    onHome: { goHome() }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
             // MARK: TimeSense
             case .timeSenseHome:
@@ -117,11 +130,31 @@ struct MainTabView: View {
                 )
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .timeSenseResult(let s):
-                TimeSenseResultView(session: s) { goHome() }
-                    .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                TimeSenseResultView(
+                    session: s,
+                    onPlayAgain: { go(.timeSenseHome) },
+                    onHome: { goHome() }
+                )
+                .transition(.opacity.combined(with: .scale(scale: 0.98)))
+            }
+
+            // Name input overlay
+            if showNameInput {
+                NameInputView { _ in
+                    withAnimation(.smooth(duration: 0.35)) {
+                        showNameInput = false
+                    }
+                }
+                .transition(.opacity)
+                .zIndex(100)
             }
         }
         .animation(.smooth(duration: 0.35), value: destinationId)
+        .onAppear {
+            if !UserNameService.hasName {
+                showNameInput = true
+            }
+        }
         .onChange(of: reactionPhase) { _, newPhase in
             withAnimation(.smooth(duration: 0.35)) {
                 switch newPhase {

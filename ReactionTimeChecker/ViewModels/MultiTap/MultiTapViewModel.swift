@@ -20,11 +20,11 @@ final class MultiTapViewModel {
     private(set) var wrongTaps: Int = 0
     private(set) var remainingTime: Double = 30.0
     private(set) var totalCirclesSpawned: Int = 0
+    private(set) var showWrongFlash: Bool = false
 
     let gameDuration: Double = 30.0
-    private let spawnInterval: Double = 0.25
-    private let shapeLifetime: Double = 1.8
-    private let autoCollectRadius: CGFloat = 0.08  // relative to screen
+    private let shapeLifetime: Double = 1.2
+    private let autoCollectRadius: CGFloat = 0.08
 
     private var startTime: Double = 0
     private var currentTask: Task<Void, Never>?
@@ -65,6 +65,12 @@ final class MultiTapViewModel {
         } else {
             shapes[idx].isCollected = true
             wrongTaps += 1
+            // Flash red
+            showWrongFlash = true
+            Task {
+                try? await Task.sleep(nanoseconds: 200_000_000)
+                showWrongFlash = false
+            }
         }
     }
 
@@ -132,8 +138,10 @@ final class MultiTapViewModel {
     private func startSpawner() {
         spawnTask = Task {
             while !Task.isCancelled {
-                spawnShape()
-                let interval = Double.random(in: 0.2...0.35)
+                // Spawn 1-2 shapes at once
+                let count = Int.random(in: 1...2)
+                for _ in 0..<count { spawnShape() }
+                let interval = Double.random(in: 0.10...0.20)
                 do {
                     try await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
                 } catch { return }
@@ -142,7 +150,7 @@ final class MultiTapViewModel {
     }
 
     private func spawnShape() {
-        let kinds: [ShapeKind] = [.circle, .circle, .triangle, .square]
+        let kinds: [ShapeKind] = [.circle, .circle, .circle, .triangle, .triangle, .square, .square]
         let kind = kinds.randomElement()!
         let x = CGFloat.random(in: 0.1...0.9)
         let y = CGFloat.random(in: 0.1...0.85)

@@ -43,37 +43,14 @@ final class TimeSenseResultViewModel {
         revealTask = nil
     }
 
-    // Lower error = better
+    // 0.02s (20ms) intervals, 10% tiers
+    // 0ms = top 1%, 20ms = top 10%, 40ms = top 20%, ...
     private static func calculatePercentile(avgErrorMs: Int) -> Int {
-        let anchors: [(ms: Int, percentile: Double)] = [
-            (30,   0.5),
-            (80,   2.0),
-            (150,  5.0),
-            (250,  12.0),
-            (400,  22.0),
-            (600,  33.0),
-            (800,  44.0),
-            (1000, 55.0),
-            (1300, 65.0),
-            (1700, 76.0),
-            (2200, 86.0),
-            (3000, 93.0),
-            (5000, 99.0),
-        ]
-
-        if avgErrorMs <= anchors.first!.ms { return 1 }
-        if avgErrorMs >= anchors.last!.ms { return 99 }
-
-        for i in 0..<(anchors.count - 1) {
-            let lo = anchors[i]
-            let hi = anchors[i + 1]
-            if avgErrorMs >= lo.ms && avgErrorMs <= hi.ms {
-                let t = Double(avgErrorMs - lo.ms) / Double(hi.ms - lo.ms)
-                let p = lo.percentile + t * (hi.percentile - lo.percentile)
-                return max(1, min(99, Int(p.rounded())))
-            }
-        }
-        return 99
+        if avgErrorMs == 0 { return 1 }
+        // Each 20ms = one tier (10%)
+        let tier = (avgErrorMs - 1) / 20 + 1  // 1-20ms → tier 1, 21-40ms → tier 2, ...
+        let percentile = tier * 10
+        return min(99, max(1, percentile))
     }
 
     private func runRevealSequence() async {

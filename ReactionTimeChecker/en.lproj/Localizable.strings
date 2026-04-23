@@ -162,3 +162,9 @@
 "Timer visible mode" = "Timer visible mode";
 "Timer hidden mode" = "Timer hidden mode";
 "Each Attempt" = "Each Attempt";
+"Browse Other Games" = "Browse Other Games";
+
+/* Name Input */
+"Enter your name" = "Enter your name";
+"Name" = "Name";
+"Confirm" = "Confirm";

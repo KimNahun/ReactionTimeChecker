@@ -162,3 +162,9 @@
 "Timer visible mode" = "타이머 보이기 모드";
 "Timer hidden mode" = "타이머 숨기기 모드";
 "Each Attempt" = "시도별 결과";
+"Browse Other Games" = "다른 게임 둘러보기";
+
+/* Name Input */
+"Enter your name" = "이름을 입력해주세요";
+"Name" = "이름";
+"Confirm" = "확인";

@@ -49,6 +49,16 @@ struct SequenceTestView: View {
 
     private var timerBar: some View {
         HStack {
+            // Back button
+            Button {
+                viewModel.cancelAll()
+                onCancel()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.ssBody)
+                    .foregroundStyle(palette.primaryAction)
+            }
+
             // Timer
             HStack(spacing: 4) {
                 Image(systemName: "timer")

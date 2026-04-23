@@ -6,13 +6,15 @@ import TopDesignSystem
 struct StroopResultView: View {
     let session: StroopSession
     let onPlayAgain: () -> Void
+    var onHome: (() -> Void)? = nil
 
     @State private var viewModel: StroopResultViewModel
     @Environment(\.designPalette) var palette
 
-    init(session: StroopSession, onPlayAgain: @escaping () -> Void) {
+    init(session: StroopSession, onPlayAgain: @escaping () -> Void, onHome: (() -> Void)? = nil) {
         self.session = session
         self.onPlayAgain = onPlayAgain
+        self.onHome = onHome
         self._viewModel = State(initialValue: StroopResultViewModel(session: session))
     }
 
@@ -277,6 +279,17 @@ struct StroopResultView: View {
                 onPlayAgain()
             }
             .padding(.horizontal, DesignSpacing.lg)
+
+            if let onHome {
+                Button {
+                    onHome()
+                } label: {
+                    Text(String(localized: "Browse Other Games"))
+                        .font(.ssBody)
+                        .foregroundStyle(palette.primaryAction)
+                }
+                .padding(.top, DesignSpacing.xs)
+            }
         }
     }
 
@@ -295,9 +308,10 @@ struct StroopResultView: View {
         guard let image = cardView.renderImage() else { return }
 
         let isKorean = Locale.current.language.languageCode?.identifier == "ko"
+        let name = UserNameService.name
         let text = isKorean
-            ? "\(viewModel.grade.emoji) 스트룹 테스트: \(session.averageMs)ms · 정확도 \(session.accuracy)% — QuickTap"
-            : "\(viewModel.grade.emoji) Stroop Test: \(session.averageMs)ms · Accuracy \(session.accuracy)% — QuickTap"
+            ? "\(viewModel.grade.emoji) \(name)님의 스트룹 테스트: \(session.averageMs)ms · 정확도 \(session.accuracy)% · 상위 \(viewModel.percentile)% — QuickTap"
+            : "\(viewModel.grade.emoji) \(name)'s Stroop: \(session.averageMs)ms · Accuracy \(session.accuracy)% · Top \(viewModel.percentile)% — QuickTap"
 
         let activityVC = UIActivityViewController(
             activityItems: [text, image],
