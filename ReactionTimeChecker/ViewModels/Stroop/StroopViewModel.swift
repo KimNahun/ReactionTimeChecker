@@ -11,6 +11,7 @@ enum StroopTestState: Sendable, Equatable {
     case correctTap(ms: Int)       // Tapped target correctly
     case falseAlarm                // Tapped non-target
     case missed                    // Didn't tap target
+    case colorChanged              // Target color changed notification
     case completed
 }
 
@@ -123,9 +124,23 @@ final class StroopViewModel {
 
     private func showNextStimulus() async {
         guard currentIndex < stimuli.count else {
-            // Record any remaining stimuli that weren't shown
             state = .completed
             return
+        }
+
+        // Change target color every 10 stimuli
+        if currentIndex > 0 && currentIndex % 10 == 0 {
+            let newColor = targetColor.randomOther()
+            targetColor = newColor
+            // Regenerate remaining stimuli with new target
+            let remaining = totalStimuli - currentIndex
+            let newStimuli = generateStimuliForCount(remaining)
+            stimuli = Array(stimuli.prefix(currentIndex)) + newStimuli
+
+            state = .colorChanged
+            do {
+                try await Task.sleep(nanoseconds: 2_000_000_000)
+            } catch { return }
         }
 
         tappedThisStimulus = false
@@ -167,11 +182,14 @@ final class StroopViewModel {
     }
 
     private func generateStimuli() -> [StroopStimulus] {
-        var result: [StroopStimulus] = []
-        let targetCount = totalStimuli / 2 + (totalStimuli.isMultiple(of: 2) ? 0 : 1)
-        let distractorCount = totalStimuli - targetCount
+        generateStimuliForCount(totalStimuli)
+    }
 
-        // Target stimuli: displayColor == targetColor, text is DIFFERENT color name
+    private func generateStimuliForCount(_ count: Int) -> [StroopStimulus] {
+        var result: [StroopStimulus] = []
+        let targetCount = count / 2 + (count.isMultiple(of: 2) ? 0 : 1)
+        let distractorCount = count - targetCount
+
         for _ in 0..<targetCount {
             let textMeaning = targetColor.randomOther()
             result.append(StroopStimulus(
@@ -182,15 +200,13 @@ final class StroopViewModel {
             ))
         }
 
-        // Distractor stimuli: displayColor != targetColor
         let nonTargetColors = StroopColor.allCases.filter { $0 != targetColor }
         for i in 0..<distractorCount {
             let displayColor = nonTargetColors[i % nonTargetColors.count]
-            // Make ~half of distractors show the target color name (hardest trick)
             let useTargetText = i < distractorCount / 2
             let textMeaning: StroopColor
             if useTargetText {
-                textMeaning = targetColor  // "파랑" in red font — brain wants to tap!
+                textMeaning = targetColor
             } else {
                 textMeaning = displayColor.randomOther()
             }

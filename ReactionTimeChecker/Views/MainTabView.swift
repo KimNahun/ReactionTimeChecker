@@ -90,7 +90,7 @@ struct MainTabView: View {
             case .stroopResult(let s):
                 StroopResultView(
                     session: s,
-                    onPlayAgain: { go(.stroopTest(stimuli: 30)) },
+                    onPlayAgain: { go(.stroopTest(stimuli: 20)) },
                     onHome: { goHome() }
                 )
                 .transition(.opacity.combined(with: .scale(scale: 0.98)))

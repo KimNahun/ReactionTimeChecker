@@ -95,6 +95,7 @@ struct StroopTestView: View {
         case .correctTap:      return "correct"
         case .falseAlarm:      return "false"
         case .missed:          return "missed"
+        case .colorChanged:    return "colorChanged"
         case .completed:       return "completed"
         }
     }
@@ -176,6 +177,21 @@ struct StroopTestView: View {
                         wordScale = 1.0
                     }
                 }
+            }
+
+        case .colorChanged:
+            VStack(spacing: DesignSpacing.lg) {
+                Text(String(localized: "Color Changed!"))
+                    .font(.ssTitle1)
+                    .foregroundStyle(palette.textPrimary)
+
+                Text(String(localized: "New target:"))
+                    .font(.ssBody)
+                    .foregroundStyle(palette.textSecondary)
+
+                Text(viewModel.targetColor.randomOther().displayName)
+                    .font(.system(size: 48, weight: .black, design: .rounded))
+                    .foregroundStyle(viewModel.targetColor.swiftUIColor)
             }
 
         case .correctTap(let ms):

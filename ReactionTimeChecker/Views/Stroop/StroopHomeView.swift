@@ -82,12 +82,12 @@ struct StroopHomeView: View {
                     .padding(.horizontal, DesignSpacing.md)
 
                     // Round info
-                    Text(String(format: String(localized: "%lld rounds"), 30))
+                    Text(String(format: String(localized: "%lld rounds"), 20))
                         .font(.ssFootnote)
                         .foregroundStyle(palette.textSecondary)
 
                     PillButton(String(localized: "Start")) {
-                        onStart(30)
+                        onStart(20)
                     }
                     .padding(.horizontal, DesignSpacing.lg)
 

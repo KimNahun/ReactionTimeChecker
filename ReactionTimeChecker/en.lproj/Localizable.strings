@@ -120,6 +120,8 @@
 "Too slow!" = "Too slow!";
 "That was the target color" = "That was the target color";
 "Target" = "Target";
+"Color Changed!" = "Color Changed!";
+"New target:" = "New target:";
 
 /* StroopResultView */
 "No correct taps 🤔" = "No correct taps 🤔";

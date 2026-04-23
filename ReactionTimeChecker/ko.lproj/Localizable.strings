@@ -120,6 +120,8 @@
 "Too slow!" = "너무 느렸어요!";
 "That was the target color" = "그건 목표 색이었어요";
 "Target" = "목표";
+"Color Changed!" = "색상이 바뀌었습니다!";
+"New target:" = "새 목표:";
 
 /* StroopResultView */
 "No correct taps 🤔" = "정답 탭이 없습니다 🤔";
