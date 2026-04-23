@@ -63,6 +63,65 @@ struct KakaoShareService {
         }
     }
 
+    // MARK: - Stroop Share
+
+    static func shareStroop(session: StroopSession, grade: Grade, percentile: Int) {
+        let emoji = grade.emoji
+        let avgMs = session.averageMs
+        let accuracy = session.accuracy
+
+        let isKorean = Locale.current.language.languageCode?.identifier == "ko"
+
+        let title = isKorean ? "스트룹 테스트 결과" : "Stroop Test Result"
+
+        let description: String
+        if isKorean {
+            description = "\(emoji) \(avgMs)ms · \(grade.name) · 정확도 \(accuracy)% · 상위 \(percentile)%"
+        } else {
+            description = "\(emoji) \(avgMs)ms · \(grade.name) · Accuracy \(accuracy)% · Top \(percentile)%"
+        }
+
+        let buttonTitle = isKorean ? "도전하기" : "Try it"
+
+        let storeUrl = URL(string: "https://itunes.apple.com/app/id6762595451")
+
+        let appLink = Link(
+            webUrl: storeUrl,
+            mobileWebUrl: storeUrl,
+            iosExecutionParams: ["challenge": "true", "mode": "stroop", "targetMs": "\(avgMs)"]
+        )
+
+        let cardView = StroopShareCardView(
+            averageMs: avgMs,
+            bestMs: session.bestMs,
+            worstMs: session.worstMs,
+            accuracy: accuracy,
+            percentile: percentile,
+            grade: grade
+        )
+
+        guard let cardImage = cardView.renderImage() else {
+            sendFeedTemplate(title: title, imageUrl: nil, description: description,
+                             buttonTitle: buttonTitle, appLink: appLink)
+            return
+        }
+
+        ShareApi.shared.imageUpload(image: cardImage) { result, error in
+            let imageUrl: URL?
+            if let result {
+                imageUrl = result.infos.original.url
+            } else {
+                print("[KakaoShare] Image upload failed: \(error?.localizedDescription ?? "unknown")")
+                imageUrl = nil
+            }
+
+            sendFeedTemplate(title: title, imageUrl: imageUrl, description: description,
+                             buttonTitle: buttonTitle, appLink: appLink)
+        }
+    }
+
+    // MARK: - Common
+
     private static func sendFeedTemplate(title: String, imageUrl: URL?, description: String,
                                           buttonTitle: String, appLink: Link) {
         let content = Content(
