@@ -184,6 +184,11 @@ struct StroopResultView: View {
 
                 VStack(spacing: DesignSpacing.sm) {
                     breakdownRow(
+                        label: String(localized: "Average Reaction Time"),
+                        value: "\(session.averageMs)ms",
+                        color: palette.primaryAction
+                    )
+                    breakdownRow(
                         label: String(localized: "Correct Taps"),
                         value: "\(session.correctTaps.count) / \(targetCount)",
                         color: palette.success
