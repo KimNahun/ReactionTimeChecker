@@ -113,7 +113,8 @@ struct StroopTestView: View {
                     .font(.ssTitle2)
                     .foregroundStyle(palette.textSecondary)
 
-                Text(viewModel.targetColor.displayName)
+                // Show a different color NAME in the target color (Stroop style)
+                Text(viewModel.targetColor.randomOther().displayName)
                     .font(.system(size: 48, weight: .black, design: .rounded))
                     .foregroundStyle(viewModel.targetColor.swiftUIColor)
 
