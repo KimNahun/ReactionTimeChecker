@@ -82,7 +82,7 @@ struct FrameMatchTestView: View {
             // Error display when stopped
             if case .stopped(_, let error) = viewModel.state {
                 VStack(spacing: DesignSpacing.sm) {
-                    Text(String(format: "%.1fpt", error))
+                    Text(String(format: "%dpt", Int(error)))
                         .font(.system(size: 32, weight: .black, design: .rounded))
                         .foregroundStyle(error < 10 ? palette.success : error < 30 ? palette.primaryAction : palette.error)
                 }

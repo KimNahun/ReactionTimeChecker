@@ -26,8 +26,8 @@ struct FrameMatchResultView: View {
                         SurfaceCard(elevation: .raised) {
                             VStack(spacing: DesignSpacing.sm) {
                                 Text(String(localized: "Average Error")).font(.ssFootnote).foregroundStyle(palette.textSecondary)
-                                Text(String(format: "%.1fpt", session.averageError)).font(.ssLargeTitle).foregroundStyle(palette.textPrimary)
-                                Text(String(format: String(localized: "Best: %.1fpt"), session.bestError))
+                                Text(String(format: "%dpt", Int(session.averageError))).font(.ssLargeTitle).foregroundStyle(palette.textPrimary)
+                                Text(String(format: String(localized: "Best: %dpt"), Int(session.bestError)))
                                     .font(.ssBody).foregroundStyle(palette.success)
                                 VStack(spacing: DesignSpacing.xs) {
                                     Text(String(localized: "Top")).font(.ssBody).foregroundStyle(palette.textSecondary)
@@ -44,7 +44,7 @@ struct FrameMatchResultView: View {
                                     HStack {
                                         Text("#\(i + 1)").font(.ssFootnote).foregroundStyle(palette.textSecondary).frame(width: 30, alignment: .leading)
                                         Spacer()
-                                        Text(String(format: "%.1fpt", err)).font(.ssBody)
+                                        Text(String(format: "%dpt", Int(err))).font(.ssBody)
                                             .foregroundStyle(err < 10 ? palette.success : err < 30 ? palette.primaryAction : palette.error)
                                     }
                                 }
@@ -94,8 +94,8 @@ struct FrameMatchResultView: View {
     private func shareText() {
         let name = UserNameService.name; let isKorean = Locale.current.language.languageCode?.identifier == "ko"
         let text = isKorean
-            ? "\(viewModel.grade.emoji) \(name)님의 액자 맞추기: 오차 \(String(format: "%.1f", session.averageError))pt · 상위 \(viewModel.percentile)% — QuickTap"
-            : "\(viewModel.grade.emoji) \(name)'s Frame Match: Error \(String(format: "%.1f", session.averageError))pt · Top \(viewModel.percentile)% — QuickTap"
+            ? "\(viewModel.grade.emoji) \(name)님의 액자 맞추기: 오차 \(Int(session.averageError))pt · 상위 \(viewModel.percentile)% — QuickTap"
+            : "\(viewModel.grade.emoji) \(name)'s Frame Match: Error \(Int(session.averageError))pt · Top \(viewModel.percentile)% — QuickTap"
         let vc = UIActivityViewController(activityItems: [text], applicationActivities: nil)
         guard let ws = UIApplication.shared.connectedScenes.first as? UIWindowScene, let root = ws.windows.first?.rootViewController else { return }
         var top = root; while let p = top.presentedViewController { top = p }; top.present(vc, animated: true)

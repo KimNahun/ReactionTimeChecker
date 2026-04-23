@@ -25,7 +25,7 @@ final class FlashMemoryViewModel {
     private(set) var displayDuration: Double = 1.0
     private(set) var pickTimeRemaining: Double = 5.0
 
-    private let pickTimeLimit: Double = 5.0
+    private let pickTimeLimit: Double = 10.0
     private let minDuration: Double = 0.2
     private var currentTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?

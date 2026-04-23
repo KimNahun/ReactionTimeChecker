@@ -100,7 +100,7 @@ final class OddColorViewModel {
 
     private func generateTiles() {
         // Difficulty: color difference decreases with rounds
-        let diff = max(0.05, 0.25 - Double(currentRound - 1) * 0.015)
+        let diff = max(0.08, 0.35 - Double(currentRound - 1) * 0.018)
 
         // Pick which quadrant will be different in the odd tile
         let oddQuadrant = Int.random(in: 0...3)

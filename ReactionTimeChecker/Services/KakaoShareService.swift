@@ -181,7 +181,7 @@ struct KakaoShareService {
 
     static func shareFrameMatch(session: FrameMatchSession, grade: Grade, percentile: Int) {
         let title = isKorean ? "\(userName)님의 액자 맞추기" : "\(userName)'s Frame Match"
-        let errStr = String(format: "%.1fpt", session.averageError)
+        let errStr = "\(Int(session.averageError))pt"
         let items = [
             ItemInfo(item: isKorean ? "평균 오차" : "Avg Error", itemOp: errStr),
             ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),
