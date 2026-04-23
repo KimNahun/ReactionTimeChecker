@@ -78,11 +78,11 @@ struct FlashMemoryTestView: View {
                         let isSelected = viewModel.selectedNumbers.contains(num)
                         Button { viewModel.selectNumber(num) } label: {
                             Text("\(num)")
-                                .font(.system(size: 28, weight: .bold, design: .rounded))
-                                .foregroundStyle(.white)
+                                .font(.system(size: 28, weight: .black, design: .rounded))
+                                .foregroundStyle(isSelected ? .white : palette.textPrimary)
                                 .frame(width: 60, height: 60)
                                 .background(Circle().fill(isSelected ? palette.primaryAction : palette.surface))
-                                .overlay(Circle().stroke(isSelected ? palette.primaryAction : .clear, lineWidth: 3))
+                                .overlay(Circle().stroke(palette.textSecondary.opacity(0.3), lineWidth: 2))
                         }
                     }
                 }

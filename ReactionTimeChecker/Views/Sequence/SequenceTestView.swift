@@ -136,26 +136,30 @@ struct SequenceTestView: View {
 
     private var numberGrid: some View {
         let sorted = viewModel.numbers.sorted { $0.gridIndex < $1.gridIndex }
-        return LazyVGrid(
-            columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: columns),
-            spacing: 8
-        ) {
-            ForEach(sorted) { num in
-                numberCell(num)
+        return GeometryReader { geo in
+            let spacing: CGFloat = 10
+            let totalSpacing = spacing * CGFloat(columns - 1) + DesignSpacing.md * 2
+            let cellSize = (geo.size.width - totalSpacing) / CGFloat(columns)
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: spacing), count: columns),
+                spacing: spacing
+            ) {
+                ForEach(sorted) { num in
+                    numberCell(num, size: cellSize)
+                }
             }
+            .padding(.horizontal, DesignSpacing.md)
         }
-        .padding(.horizontal, DesignSpacing.md)
     }
 
-    private func numberCell(_ num: SequenceNumber) -> some View {
+    private func numberCell(_ num: SequenceNumber, size: CGFloat) -> some View {
         Button {
             viewModel.handleTap(value: num.value)
         } label: {
             Text("\(num.value)")
-                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .font(.system(size: 18, weight: .bold, design: .rounded))
                 .foregroundStyle(num.isTapped ? palette.textSecondary.opacity(0.15) : .white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 52)
+                .frame(width: size, height: size)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .fill(cellColor(num: num))

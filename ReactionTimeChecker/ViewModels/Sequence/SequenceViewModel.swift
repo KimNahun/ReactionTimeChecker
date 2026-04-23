@@ -129,7 +129,7 @@ final class SequenceViewModel {
     }
 
     private func generateNumbers() {
-        var pool = Array(1...100)
+        var pool = Array(1...50)
         pool.shuffle()
         let selected = Array(pool.prefix(numberCount)).sorted()
         var indices = Array(0..<numberCount)
