@@ -14,8 +14,8 @@ struct KakaoShareService {
 
     static func share(session: TestSession, grade: Grade, percentile: Int) {
         let title = isKorean
-            ? "\(userName)님의 반응속도 테스트"
-            : "\(userName)'s Reaction Test"
+            ? "\(userName)님의 '반응속도' 기록"
+            : "\(userName)'s 'Reaction' Record"
 
         let items = [
             ItemInfo(item: isKorean ? "반응속도" : "Speed", itemOp: "\(session.averageMs)ms"),
@@ -51,8 +51,8 @@ struct KakaoShareService {
 
     static func shareStroop(session: StroopSession, grade: Grade, percentile: Int) {
         let title = isKorean
-            ? "\(userName)님의 스트룹 테스트"
-            : "\(userName)'s Stroop Test"
+            ? "\(userName)님의 '색상 판별' 기록"
+            : "\(userName)'s 'Color Stroop' Record"
 
         let items = [
             ItemInfo(item: isKorean ? "반응속도" : "Speed", itemOp: "\(session.averageMs)ms"),
@@ -90,8 +90,8 @@ struct KakaoShareService {
         let totalSec = String(format: "%.2fs", Double(session.totalTimeMs) / 1000.0)
 
         let title = isKorean
-            ? "\(userName)님의 순서 탭 테스트"
-            : "\(userName)'s Sequence Test"
+            ? "\(userName)님의 '순서 탭' 기록"
+            : "\(userName)'s 'Sequence' Record"
 
         var items = [
             ItemInfo(item: isKorean ? "소요시간" : "Time", itemOp: totalSec),
@@ -119,8 +119,8 @@ struct KakaoShareService {
         let total = session.circlesTapped + session.circlesAutoCollected
 
         let title = isKorean
-            ? "\(userName)님의 멀티 탭 테스트"
-            : "\(userName)'s Multi-Tap Test"
+            ? "\(userName)님의 '멀티 탭' 기록"
+            : "\(userName)'s 'Multi-Tap' Record"
 
         let items = [
             ItemInfo(item: isKorean ? "탭한 원" : "Circles", itemOp: isKorean ? "\(total)개" : "\(total)"),
@@ -145,8 +145,8 @@ struct KakaoShareService {
             : (session.timerVisible ? "Visible" : "Hidden")
 
         let title = isKorean
-            ? "\(userName)님의 시간 감각 테스트"
-            : "\(userName)'s Time Sense Test"
+            ? "\(userName)님의 '시간 감각' 기록"
+            : "\(userName)'s 'Time Sense' Record"
 
         let items = [
             ItemInfo(item: isKorean ? "오차" : "Error", itemOp: errorSec),
@@ -166,7 +166,7 @@ struct KakaoShareService {
     // MARK: - Flash Memory
 
     static func shareFlashMemory(session: FlashMemorySession, grade: Grade, percentile: Int) {
-        let title = isKorean ? "\(userName)님의 순간 포착" : "\(userName)'s Flash Memory"
+        let title = isKorean ? "\(userName)님의 '순간 포착' 기록" : "\(userName)'s 'Flash Memory' Record"
         let items = [
             ItemInfo(item: isKorean ? "라운드" : "Rounds", itemOp: "\(session.roundsCompleted)"),
             ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),
@@ -180,7 +180,7 @@ struct KakaoShareService {
     // MARK: - Frame Match
 
     static func shareFrameMatch(session: FrameMatchSession, grade: Grade, percentile: Int) {
-        let title = isKorean ? "\(userName)님의 액자 맞추기" : "\(userName)'s Frame Match"
+        let title = isKorean ? "\(userName)님의 '액자 맞추기' 기록" : "\(userName)'s 'Frame Match' Record"
         let errStr = "\(Int(session.averageError))pt"
         let items = [
             ItemInfo(item: isKorean ? "평균 오차" : "Avg Error", itemOp: errStr),
@@ -195,7 +195,7 @@ struct KakaoShareService {
     // MARK: - Odd Color
 
     static func shareOddColor(session: OddColorSession, grade: Grade, percentile: Int) {
-        let title = isKorean ? "\(userName)님의 색상 찾기" : "\(userName)'s Odd Color"
+        let title = isKorean ? "\(userName)님의 '색상 찾기' 기록" : "\(userName)'s 'Odd Color' Record"
         let items = [
             ItemInfo(item: isKorean ? "라운드" : "Rounds", itemOp: "\(session.roundsCompleted)"),
             ItemInfo(item: isKorean ? "상위" : "Top", itemOp: "\(percentile)%"),

@@ -6,12 +6,14 @@ import TopDesignSystem
 struct ResultView: View {
     let session: TestSession
     @Binding var phase: AppPhase
+    var onHome: (() -> Void)? = nil
     @State private var viewModel: ResultViewModel
     @Environment(\.designPalette) var palette
 
-    init(session: TestSession, phase: Binding<AppPhase>) {
+    init(session: TestSession, phase: Binding<AppPhase>, onHome: (() -> Void)? = nil) {
         self.session = session
         self._phase = phase
+        self.onHome = onHome
         self._viewModel = State(initialValue: ResultViewModel(session: session))
     }
 
@@ -277,10 +279,19 @@ struct ResultView: View {
             // Play Again
             PillButton(String(localized: "Play Again")) {
                 withAnimation(.smooth(duration: 0.35)) {
-                    phase = .home
+                    phase = .testing(rounds: session.rounds)
                 }
             }
             .padding(.horizontal, DesignSpacing.lg)
+
+            if let onHome {
+                Button { onHome() } label: {
+                    Text(String(localized: "Browse Other Games"))
+                        .font(.ssBody)
+                        .foregroundStyle(palette.primaryAction)
+                }
+                .padding(.top, DesignSpacing.xs)
+            }
         }
     }
 

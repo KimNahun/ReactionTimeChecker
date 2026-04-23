@@ -21,11 +21,11 @@ struct OddColorTestView: View {
                         Image(systemName: "chevron.left").font(.ssBody).foregroundStyle(palette.primaryAction)
                     }
 
-                    // Target color indicator — large
+                    // Target color indicator — slightly smaller than one tile
                     HStack(spacing: 6) {
                         Text(String(localized: "Find:")).font(.ssBody).foregroundStyle(palette.textSecondary)
-                        RoundedRectangle(cornerRadius: 6).fill(viewModel.targetColor).frame(width: 36, height: 36)
-                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(.white.opacity(0.5), lineWidth: 2))
+                        RoundedRectangle(cornerRadius: 8).fill(viewModel.targetColor).frame(width: 60, height: 60)
+                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(.white.opacity(0.6), lineWidth: 3))
                     }
 
                     Spacer()

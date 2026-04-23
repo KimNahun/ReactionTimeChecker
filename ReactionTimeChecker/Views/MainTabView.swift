@@ -70,7 +70,7 @@ struct MainTabView: View {
                 TestView(rounds: rounds, phase: $reactionPhase)
                     .transition(.opacity.combined(with: .scale(scale: 0.98)))
             case .reactionResult(let session):
-                ResultView(session: session, phase: $reactionPhase)
+                ResultView(session: session, phase: $reactionPhase, onHome: { goHome() })
                     .transition(.opacity.combined(with: .scale(scale: 0.98)))
 
             // MARK: Stroop
