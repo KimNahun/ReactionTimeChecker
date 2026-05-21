@@ -2,6 +2,8 @@
 
 순발력, 색감, 기억력, 시간 감각을 측정하는 **9가지 미니 게임**이 담긴 iOS 앱입니다.
 
+> 🤖 **AI 하네스 기반 개발** · 🌐 **한국어 / 영어 다국어 지원**
+
 <table>
   <tr>
     <td align="center" width="25%">
@@ -59,6 +61,43 @@
   </tr>
 </table>
 
+---
+
+## ✨ Highlights
+
+### 🤖 AI 하네스 기반 개발
+**Planner → Generator → Evaluator** 3-Agent 파이프라인으로 코드를 자동 생성·검증합니다.
+한 줄 프롬프트만 입력하면 SPEC 작성 → Swift 코드 생성 → QA 리포트까지 자동 실행되며,
+각 단계 결과물은 `harness/` 폴더에 산출물(SPEC.md, output/, QA_REPORT.md)로 남습니다.
+
+```
+사용자 한 줄 프롬프트
+       │
+       ▼
+[Planner]   ──► SPEC.md 생성
+       │
+       ▼
+[Generator] ──► output/*.swift 생성
+       │
+       ▼
+[Evaluator] ──► QA_REPORT.md 합격/피드백
+       │
+       ▼  (합격 시)
+Xcode 프로젝트에 통합
+```
+
+### 🌐 다국어 지원 (Localization)
+`Localizable.strings` 기반으로 **한국어 / 영어**를 완벽 지원합니다.
+모든 게임 UI · 등급 설명 · 결과 화면 문구가 시스템 언어에 맞춰 자동 전환됩니다.
+
+```
+ReactionTimeChecker/
+├── ko.lproj/Localizable.strings   # 한국어
+└── en.lproj/Localizable.strings   # English
+```
+
+---
+
 ## 게임 소개
 
 | 게임 | 설명 |
@@ -73,8 +112,19 @@
 | **색상 찾기** | 제시된 색상 타일을 그리드에서 찾기 |
 | **큰 원 찾기** | 비슷한 크기의 원들 중 **가장 큰 원** 선택 |
 
+---
+
+## 기술 스택
+
+**Swift 5 · SwiftUI · iOS 17+ · MVVM · SPM** (TopDesignSystem, Kakao SDK)
+
 ## 빌드
 
-- Xcode 15+
-- iOS 17+
-- Swift / SwiftUI
+```bash
+# 1) 시크릿 설정
+cp Secrets.template.xcconfig Secrets.xcconfig
+# Secrets.xcconfig에 카카오 앱 키 입력
+
+# 2) Xcode 열기
+open ReactionTimeChecker.xcodeproj
+```
