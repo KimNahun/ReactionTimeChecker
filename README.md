@@ -2,6 +2,10 @@
 
 순발력, 색감, 기억력, 시간 감각을 측정하는 **9가지 미니 게임**이 담긴 iOS 앱입니다.
 
+<a href="https://apps.apple.com/kr/app/%EB%B0%98%EC%9D%91%EC%86%8D%EB%8F%84-%ED%85%8C%EC%8A%A4%ED%8A%B8/id6762595451">
+  <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ko-kr?size=250x83" alt="Download on the App Store" height="50"/>
+</a>
+
 > **AI 하네스 기반 개발** · **한국어 / 영어 다국어 지원**
 
 <table>
