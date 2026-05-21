@@ -2,7 +2,7 @@
 
 순발력, 색감, 기억력, 시간 감각을 측정하는 **9가지 미니 게임**이 담긴 iOS 앱입니다.
 
-> 🤖 **AI 하네스 기반 개발** · 🌐 **한국어 / 영어 다국어 지원**
+> **AI 하네스 기반 개발** · **한국어 / 영어 다국어 지원**
 
 <table>
   <tr>
@@ -11,47 +11,47 @@
       <img src="docs/screenshots/01_home.png" width="220"/>
     </td>
     <td align="center" width="25%">
-      <b>⚡ 반응속도</b><br/>
+      <b>반응속도</b><br/>
       <img src="docs/screenshots/02_reaction.png" width="220"/>
     </td>
     <td align="center" width="25%">
-      <b>🎨 색상 판별</b><br/>
+      <b>색상 판별</b><br/>
       <img src="docs/screenshots/03_stroop.png" width="220"/>
     </td>
     <td align="center" width="25%">
-      <b>🔢 순서 탭</b><br/>
+      <b>순서 탭</b><br/>
       <img src="docs/screenshots/04_sequence.png" width="220"/>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <b>☝️ 멀티 탭</b><br/>
+      <b>멀티 탭</b><br/>
       <img src="docs/screenshots/05_multitap.png" width="220"/>
     </td>
     <td align="center">
-      <b>⏱️ 시간 감각</b><br/>
+      <b>시간 감각</b><br/>
       <img src="docs/screenshots/06_timesense.png" width="220"/>
     </td>
     <td align="center">
-      <b>🔦 순간 포착</b><br/>
+      <b>순간 포착</b><br/>
       <img src="docs/screenshots/07_memory.png" width="220"/>
     </td>
     <td align="center">
-      <b>🖼️ 액자 맞추기</b><br/>
+      <b>액자 맞추기</b><br/>
       <img src="docs/screenshots/08_frame.png" width="220"/>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <b>⬛ 색상 찾기</b><br/>
+      <b>색상 찾기</b><br/>
       <img src="docs/screenshots/09_findcolor.png" width="220"/>
     </td>
     <td align="center">
-      <b>📐 큰 원 찾기</b><br/>
+      <b>큰 원 찾기</b><br/>
       <img src="docs/screenshots/10_bigcircle.png" width="220"/>
     </td>
     <td align="center">
-      <b>🏆 결과 화면</b><br/>
+      <b>결과 화면</b><br/>
       <img src="docs/screenshots/11_result.png" width="220"/>
     </td>
     <td align="center">
@@ -63,9 +63,9 @@
 
 ---
 
-## ✨ Highlights
+## Highlights
 
-### 🤖 AI 하네스 기반 개발
+### AI 하네스 기반 개발
 **Planner → Generator → Evaluator** 3-Agent 파이프라인으로 코드를 자동 생성·검증합니다.
 한 줄 프롬프트만 입력하면 SPEC 작성 → Swift 코드 생성 → QA 리포트까지 자동 실행되며,
 각 단계 결과물은 `harness/` 폴더에 산출물(SPEC.md, output/, QA_REPORT.md)로 남습니다.
@@ -86,7 +86,7 @@
 Xcode 프로젝트에 통합
 ```
 
-### 🌐 다국어 지원 (Localization)
+### 다국어 지원 (Localization)
 `Localizable.strings` 기반으로 **한국어 / 영어**를 완벽 지원합니다.
 모든 게임 UI · 등급 설명 · 결과 화면 문구가 시스템 언어에 맞춰 자동 전환됩니다.
 
