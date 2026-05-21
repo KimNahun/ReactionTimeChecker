@@ -236,8 +236,17 @@ struct MainTabView: View {
         }
         .onChange(of: deepLinkMode) { _, mode in
             withAnimation(.smooth(duration: 0.35)) {
-                if mode == "stroop" { destination = .stroopHome }
-                else { reactionPhase = .home; destination = .reactionHome }
+                switch mode {
+                case "stroop":        destination = .stroopHome
+                case "sequence":      destination = .sequenceHome
+                case "multitap":      destination = .multiTapHome
+                case "timesense":     destination = .timeSenseHome
+                case "flashmemory":   destination = .flashMemoryHome
+                case "framematch":    destination = .frameMatchHome
+                case "oddcolor":      destination = .oddColorHome
+                case "biggestcircle": destination = .biggestCircleHome
+                default:              reactionPhase = .home; destination = .reactionHome
+                }
                 deepLinkMode = nil
             }
         }
